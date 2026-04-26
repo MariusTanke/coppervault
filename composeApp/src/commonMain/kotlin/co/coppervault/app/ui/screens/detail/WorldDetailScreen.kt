@@ -52,6 +52,7 @@ import co.coppervault.app.ui.theme.CVTheme
 import co.coppervault.app.ui.theme.Fog
 import co.coppervault.app.ui.theme.Linen
 import co.coppervault.app.ui.theme.Parchment
+import co.coppervault.app.ui.theme.Abyss
 import co.coppervault.app.ui.theme.Void
 
 class WorldDetailScreen(private val worldKey: String) : Screen {
@@ -110,7 +111,7 @@ class WorldDetailScreen(private val worldKey: String) : Screen {
                             // Base gradient Abyss → Void
                             drawRect(
                                 brush = Brush.verticalGradient(
-                                    listOf(CVTheme.colors.abyss, Void),
+                                    listOf(Abyss, Void),
                                 ),
                             )
                             // World accent radial glow
@@ -240,7 +241,7 @@ class WorldDetailScreen(private val worldKey: String) : Screen {
                                 modifier = Modifier
                                     .width(130.dp)
                                     .clickable {
-                                        navigator.push(BookDetailScreen(book.id))
+                                        // Wired in P1.4
                                     },
                             ) {
                                 BookCoverPlaceholder(
@@ -290,7 +291,7 @@ class WorldDetailScreen(private val worldKey: String) : Screen {
                         thread = thread,
                         t = t,
                         onClick = {
-                            navigator.push(ThreadDetailScreen(thread.id))
+                            // Wired in P1.4
                         },
                     )
                     CVDivider()

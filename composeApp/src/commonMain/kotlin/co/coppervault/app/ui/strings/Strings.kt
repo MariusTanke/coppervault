@@ -130,6 +130,27 @@ interface Strings {
     val nothingFound: String
     val nothingFoundSub: String
 
+    // ── Detail screens ─────────────────────────────────
+    val featuredLore: String
+    val booksFromWorld: String
+    val recentDebates: String
+    val worldLore: Map<String, String>
+    val startReading: String
+    val continueReading: String
+    val reread: String
+    val synopsis: String
+    val detailsLabel: String
+    val worldLabel: String
+    val orderLabelDetail: String
+    val pagesLabel: String
+    val publishedLabel: String
+    val bookDebates: String
+    val shareLabel: String
+    val sortNewest: String
+    val replyLabel: String
+    val replyPlaceholder: String
+    val sendLabel: String
+
     // ── Article ─────────────────────────────────────────
     val spoilers: String
 
@@ -280,6 +301,35 @@ object EnStrings : Strings {
     override val nothingFound = "Nothing found"
     override val nothingFoundSub = "Try a different search."
 
+    override val featuredLore = "Featured Lore"
+    override val booksFromWorld = "Books from this World"
+    override val recentDebates = "Recent Debates"
+    override val worldLore = mapOf(
+        "roshar" to "A world of endless storms, where civilizations shelter in the lee of ancient stone formations. The highstorms carry Stormlight\u2014raw Investiture that fuels the magic of the Knights Radiant and shapes every aspect of life on this battered land.",
+        "scadrial" to "Once shrouded in ash and ruled by an immortal tyrant, Scadrial has been reborn. Its metals hold the key to three interconnected magic systems: Allomancy, Feruchemy, and Hemalurgy\u2014gifts and curses of the Shards that shaped this world.",
+        "nalthis" to "A world of vivid color and divine Returned. BioChromatic Breath can be given, traded, or hoarded, granting Awakeners the power to bring objects to life with a whispered Command.",
+        "sel" to "The Shards Devotion and Dominion were splintered long ago, their power pooling into the Cognitive Realm. Magic on Sel is bound to geography: AonDor near Elantris, ChayShan in JinDo, each drawing from the Dor.",
+        "taldain" to "A tidally locked world\u2014one face scorched in perpetual daylight, the other in endless night. Sand Masters command the white sands of Dayside, channeling Investiture through microflora that live within the grains.",
+        "threnody" to "A haunted world where the dead do not rest easily. The Shades of the Fallen patrol the forests, and the Simple Rules govern survival: do not kindle flame, do not shed blood, do not run at night.",
+        "first" to "An ocean world of scattered islands, home to the Aviar\u2014birds whose bond with humans grants unique talents. The island of Patji is a predator\u2019s paradise, sacred and deadly.",
+        "yolen" to "The origin world of the Cosmere, where Adonalsium was shattered into sixteen Shards. Little is known of Yolen in the current age\u2014its secrets lie buried beneath the oldest stories.",
+    )
+    override val startReading = "Start Reading"
+    override val continueReading = "Continue Reading"
+    override val reread = "Re-read"
+    override val synopsis = "Synopsis"
+    override val detailsLabel = "Details"
+    override val worldLabel = "WORLD"
+    override val orderLabelDetail = "ORDER"
+    override val pagesLabel = "PAGES"
+    override val publishedLabel = "PUBLISHED"
+    override val bookDebates = "Debates about this Book"
+    override val shareLabel = "Share"
+    override val sortNewest = "Newest"
+    override val replyLabel = "Reply"
+    override val replyPlaceholder = "Write a reply\u2026"
+    override val sendLabel = "Send"
+
     override val spoilers = "Spoilers"
 
     override val tHome = "Home"
@@ -426,6 +476,35 @@ object EsStrings : Strings {
     override val results = "resultados"
     override val nothingFound = "Nada encontrado"
     override val nothingFoundSub = "Prueba con otra b\u00FAsqueda."
+
+    override val featuredLore = "Lore Destacado"
+    override val booksFromWorld = "Libros de este Mundo"
+    override val recentDebates = "Debates Recientes"
+    override val worldLore = mapOf(
+        "roshar" to "Un mundo de tormentas interminables, donde las civilizaciones se refugian tras antiguas formaciones de piedra. Las altas tormentas traen luz tormentosa\u2014Investidura pura que alimenta la magia de los Caballeros Radiantes y moldea cada aspecto de la vida en esta tierra azotada.",
+        "scadrial" to "Antes envuelto en ceniza y gobernado por un tirano inmortal, Scadrial ha renacido. Sus metales guardan la clave de tres sistemas m\u00E1gicos interconectados: Alomancia, Feruquimia y Hemalurgia\u2014dones y maldiciones de las Esquirlas que dieron forma a este mundo.",
+        "nalthis" to "Un mundo de colores v\u00EDvidos y Retornados divinos. El Aliento Biocrom\u00E1tico puede darse, intercambiarse o atesorarse, otorgando a los Despertadores el poder de dar vida a los objetos con un Mandato susurrado.",
+        "sel" to "Las Esquirlas Devoci\u00F3n y Dominio fueron fragmentadas hace mucho, su poder acumul\u00E1ndose en el Reino Cognitivo. La magia en Sel est\u00E1 ligada a la geograf\u00EDa: AonDor cerca de Elantris, ChayShan en JinDo, cada una extrayendo del Dor.",
+        "taldain" to "Un mundo con acoplamiento de marea\u2014una cara abrasada en luz perpetua, la otra en noche eterna. Los Maestros de Arena dominan las arenas blancas del Lado Diurno, canalizando Investidura a trav\u00E9s de microflora que habita en los granos.",
+        "threnody" to "Un mundo encantado donde los muertos no descansan f\u00E1cilmente. Las Sombras de los Ca\u00EDdos patrullan los bosques, y las Reglas Simples gobiernan la supervivencia: no enciendas fuego, no derrames sangre, no corras de noche.",
+        "first" to "Un mundo oce\u00E1nico de islas dispersas, hogar de los Aviar\u2014aves cuyo v\u00EDnculo con los humanos otorga talentos \u00FAnicos. La isla de Patji es un para\u00EDso de depredadores, sagrada y mort\u00EDfera.",
+        "yolen" to "El mundo de origen del Cosmere, donde Adonalsium fue fragmentado en diecis\u00E9is Esquirlas. Poco se sabe de Yolen en la era actual\u2014sus secretos yacen enterrados bajo las historias m\u00E1s antiguas.",
+    )
+    override val startReading = "Empezar a Leer"
+    override val continueReading = "Continuar Leyendo"
+    override val reread = "Releer"
+    override val synopsis = "Sinopsis"
+    override val detailsLabel = "Detalles"
+    override val worldLabel = "MUNDO"
+    override val orderLabelDetail = "ORDEN"
+    override val pagesLabel = "P\u00C1GINAS"
+    override val publishedLabel = "PUBLICADO"
+    override val bookDebates = "Debates sobre este Libro"
+    override val shareLabel = "Compartir"
+    override val sortNewest = "M\u00E1s recientes"
+    override val replyLabel = "Responder"
+    override val replyPlaceholder = "Escribe una respuesta\u2026"
+    override val sendLabel = "Enviar"
 
     override val spoilers = "Spoilers"
 
