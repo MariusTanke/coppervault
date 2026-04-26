@@ -39,6 +39,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import co.coppervault.app.data.WorldDetailsCopy
 import co.coppervault.app.data.WorldMeta
 import co.coppervault.app.data.Worlds
@@ -50,6 +52,7 @@ import co.coppervault.app.ui.components.CVIcons
 import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.PlanetCoverflow
 import co.coppervault.app.ui.components.PlanetSphere
+import co.coppervault.app.ui.screens.detail.WorldDetailScreen
 import co.coppervault.app.ui.strings.CVStrings
 import co.coppervault.app.ui.strings.Strings
 import co.coppervault.app.ui.theme.Ash
@@ -65,6 +68,7 @@ class WorldsScreen : Screen {
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val t = CVStrings.current
         val worlds = Worlds.all
         var focus by remember { mutableIntStateOf(0) }
@@ -93,6 +97,7 @@ class WorldsScreen : Screen {
                         saga = t.worldSagaName[worlds[focus].key] ?: "",
                         details = t.worldDetails[worlds[focus].key],
                         t = t,
+                        onExplore = { navigator.push(WorldDetailScreen(worlds[focus].key)) },
                     )
                 }
 
@@ -107,7 +112,7 @@ class WorldsScreen : Screen {
                         world = world,
                         saga = t.worldSagaName[world.key] ?: "",
                         isActive = i == focus,
-                        onClick = { focus = i },
+                        onClick = { navigator.push(WorldDetailScreen(world.key)) },
                     )
                 }
             }
@@ -156,7 +161,7 @@ private fun WorldsHeader(t: Strings) {
 // ── World detail panel ──────────────────────────────────
 
 @Composable
-private fun WorldDetailPanel(world: WorldMeta, saga: String, details: WorldDetailsCopy?, t: Strings) {
+private fun WorldDetailPanel(world: WorldMeta, saga: String, details: WorldDetailsCopy?, t: Strings, onExplore: () -> Unit = {}) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier
@@ -199,7 +204,7 @@ private fun WorldDetailPanel(world: WorldMeta, saga: String, details: WorldDetai
                     text = "${world.name} \u2192",
                     variant = CVButtonVariant.Ghost,
                     size = CVButtonSize.S,
-                    onClick = {},
+                    onClick = onExplore,
                 )
             }
         }

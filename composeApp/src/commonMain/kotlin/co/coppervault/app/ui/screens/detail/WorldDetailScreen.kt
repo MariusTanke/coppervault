@@ -241,7 +241,7 @@ class WorldDetailScreen(private val worldKey: String) : Screen {
                                 modifier = Modifier
                                     .width(130.dp)
                                     .clickable {
-                                        // Wired in P1.4
+                                        navigator.push(BookDetailScreen(book.id))
                                     },
                             ) {
                                 BookCoverPlaceholder(
@@ -291,7 +291,7 @@ class WorldDetailScreen(private val worldKey: String) : Screen {
                         thread = thread,
                         t = t,
                         onClick = {
-                            // Wired in P1.4
+                            navigator.push(ThreadDetailScreen(thread.id))
                         },
                     )
                     CVDivider()

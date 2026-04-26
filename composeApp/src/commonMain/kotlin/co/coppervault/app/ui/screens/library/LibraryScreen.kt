@@ -33,11 +33,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import co.coppervault.app.data.Library
 import co.coppervault.app.data.LibraryBook
 import co.coppervault.app.data.Worlds
 import co.coppervault.app.ui.components.BookCoverPlaceholder
 import co.coppervault.app.ui.components.CVDivider
+import co.coppervault.app.ui.screens.detail.BookDetailScreen
 import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.strings.CVStrings
 import co.coppervault.app.ui.theme.Ash
@@ -51,6 +54,7 @@ class LibraryScreen : Screen {
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val t = CVStrings.current
         var selectedFilter by remember { mutableStateOf(0) }
 
@@ -180,7 +184,7 @@ class LibraryScreen : Screen {
                         BookCard(
                             book = book,
                             worldAccent = accent,
-                            onClick = { /* P2: navigate to BookDetail */ },
+                            onClick = { navigator.push(BookDetailScreen(book.id)) },
                         )
                     }
                 }

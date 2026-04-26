@@ -5,11 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,8 +39,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import co.coppervault.app.data.Articles
+import co.coppervault.app.data.Forum
 import co.coppervault.app.data.Worlds
-import co.coppervault.app.data.worldAccentByName
 import co.coppervault.app.ui.components.CVChip
 import co.coppervault.app.ui.components.CVCosmereMark
 import co.coppervault.app.ui.components.CVDivider
@@ -51,7 +49,10 @@ import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.CVPlaceholder
 import co.coppervault.app.ui.components.CVSpoilerStrip
 import co.coppervault.app.ui.components.CVWordmark
+import co.coppervault.app.ui.components.ForumThreadRow
 import co.coppervault.app.ui.screens.article.ArticleReaderScreen
+import co.coppervault.app.ui.screens.detail.BookDetailScreen
+import co.coppervault.app.ui.screens.detail.ThreadDetailScreen
 import co.coppervault.app.ui.screens.notifications.NotificationsScreen
 import co.coppervault.app.ui.screens.search.SearchScreen
 import co.coppervault.app.ui.strings.CVStrings
@@ -67,26 +68,12 @@ import co.coppervault.app.ui.theme.Stone
 
 // ── Mock data ───────────────────────────────────────────
 
-private data class HomeReadingMock(val title: String, val world: String, val percent: Int)
+private data class HomeReadingMock(val bookId: String, val title: String, val world: String, val percent: Int)
 
 private val readingMocks = listOf(
-    HomeReadingMock("Words of Radiance", "roshar", 68),
-    HomeReadingMock("The Well of Ascension", "scadrial", 34),
-    HomeReadingMock("Warbreaker", "nalthis", 12),
-)
-
-private data class HomeThreadMock(
-    val title: String,
-    val replies: Int,
-    val world: String,
-    val author: String,
-    val time: String,
-)
-
-private val threadMocks = listOf(
-    HomeThreadMock("Is Hoid present in every Cosmere novel?", 247, "Cosmere", "stormwarden", "2h"),
-    HomeThreadMock("Theory: Shards of Dominion and Devotion", 89, "Sel", "elantris_scholar", "5h"),
-    HomeThreadMock("On the metallurgy of Harmonium", 142, "Scadrial", "allomancer_22", "8h"),
+    HomeReadingMock("wor", "Words of Radiance", "roshar", 68),
+    HomeReadingMock("woa", "The Well of Ascension", "scadrial", 34),
+    HomeReadingMock("warbreaker", "Warbreaker", "nalthis", 12),
 )
 
 // ── Screen ──────────────────────────────────────────────
@@ -132,7 +119,7 @@ class HomeScreen : Screen {
                 }
 
                 // 2.2 Continue reading row
-                item { ContinueReadingRow() }
+                item { ContinueReadingRow(onBookClick = { bookId -> navigator.push(BookDetailScreen(bookId)) }) }
 
                 // 2.3 From the Forum header
                 item {
@@ -142,7 +129,7 @@ class HomeScreen : Screen {
                 }
 
                 // 2.3 Forum threads
-                item { ForumThreads(t) }
+                item { ForumThreads(t, onThreadClick = { threadId -> navigator.push(ThreadDetailScreen(threadId)) }) }
             }
         }
     }
@@ -316,7 +303,7 @@ private fun TodaysPageCard(
 // ── Continue reading row ────────────────────────────────
 
 @Composable
-private fun ContinueReadingRow() {
+private fun ContinueReadingRow(onBookClick: (String) -> Unit = {}) {
     LazyRow(
         contentPadding = PaddingValues(horizontal = 20.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -325,7 +312,7 @@ private fun ContinueReadingRow() {
             val world = Worlds.byKey[book.world]
             val accent = world?.accent ?: Aurum
 
-            Column(modifier = Modifier.width(120.dp)) {
+            Column(modifier = Modifier.width(120.dp).clickable { onBookClick(book.bookId) }) {
                 CVPlaceholder(
                     label = book.title.split(" ").first(),
                     tint = accent,
@@ -379,78 +366,18 @@ private fun ContinueReadingRow() {
 // ── Forum threads ───────────────────────────────────────
 
 @Composable
-private fun ForumThreads(t: co.coppervault.app.ui.strings.Strings) {
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-            .background(Stone),
-        verticalArrangement = Arrangement.spacedBy(1.dp),
-    ) {
-        threadMocks.forEach { thread ->
-            val accent = worldAccentByName(thread.world)
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(IntrinsicSize.Min)
-                    .background(Abyss)
-                    .padding(vertical = 14.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                // World accent border-left
-                Box(
-                    modifier = Modifier
-                        .width(2.dp)
-                        .fillMaxHeight()
-                        .background(accent.copy(alpha = 0.8f)),
-                )
-
-                // Content
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = thread.title,
-                        style = CVTheme.typography.displayM.copy(
-                            fontSize = 15.sp,
-                            lineHeight = 19.5.sp,
-                        ),
-                        color = Parchment,
-                    )
-
-                    Spacer(Modifier.height(6.dp))
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        Text(
-                            text = thread.world.uppercase(),
-                            style = CVTheme.typography.monoMeta.copy(
-                                fontSize = 10.sp,
-                                letterSpacing = 0.5.sp,
-                            ),
-                            color = accent,
-                        )
-                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp), color = Ash)
-                        Text(
-                            text = thread.author,
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 0.5.sp),
-                            color = Ash,
-                        )
-                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp), color = Ash)
-                        Text(
-                            text = thread.time,
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 0.5.sp),
-                            color = Ash,
-                        )
-                        Spacer(Modifier.weight(1f))
-                        Text(
-                            text = "${thread.replies} ${t.replies}",
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 0.5.sp),
-                            color = Ash,
-                        )
-                    }
-                }
-            }
+private fun ForumThreads(
+    t: co.coppervault.app.ui.strings.Strings,
+    onThreadClick: (String) -> Unit = {},
+) {
+    Column {
+        Forum.threads.take(3).forEach { thread ->
+            ForumThreadRow(
+                thread = thread,
+                t = t,
+                onClick = { onThreadClick(thread.id) },
+            )
+            CVDivider()
         }
     }
 }

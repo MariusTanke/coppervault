@@ -34,6 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import co.coppervault.app.data.Forum
 import co.coppervault.app.data.ForumThread
 import co.coppervault.app.data.Worlds
@@ -43,6 +45,7 @@ import co.coppervault.app.ui.components.CVDivider
 import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.CVSpoilerStrip
 import co.coppervault.app.ui.components.ForumThreadRow
+import co.coppervault.app.ui.screens.detail.ThreadDetailScreen
 import co.coppervault.app.ui.strings.CVStrings
 import co.coppervault.app.ui.theme.Ash
 import co.coppervault.app.ui.theme.Aurum
@@ -57,6 +60,7 @@ class ForumScreen : Screen {
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val t = CVStrings.current
         var selectedFilter by remember { mutableStateOf(0) }
 
@@ -158,7 +162,7 @@ class ForumScreen : Screen {
                 ) {
                     items(filtered, key = { it.id }) { thread ->
                         ForumThreadRow(thread = thread, t = t, onClick = {
-                            // TODO(p2): navigate to ThreadDetailScreen
+                            navigator.push(ThreadDetailScreen(thread.id))
                         })
                         CVDivider()
                     }

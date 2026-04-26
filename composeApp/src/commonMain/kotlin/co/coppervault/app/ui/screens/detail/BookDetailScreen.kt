@@ -316,7 +316,7 @@ class BookDetailScreen(private val bookId: String) : Screen {
                         thread = threads[i],
                         t = t,
                         onClick = {
-                            // Wired in P1.4
+                            navigator.push(ThreadDetailScreen(threads[i].id))
                         },
                     )
                     CVDivider()
