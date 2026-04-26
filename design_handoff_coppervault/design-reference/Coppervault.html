@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Worldhopper — Design</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f0eee9; overflow: hidden; }
+  * { box-sizing: border-box; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="android-frame.jsx"></script>
+<script type="text/babel" src="design-system.jsx"></script>
+<script type="text/babel" src="i18n.jsx"></script>
+<script type="text/babel" src="screens-auth.jsx"></script>
+<script type="text/babel" src="screens-main.jsx"></script>
+<script type="text/babel" src="screens-social.jsx"></script>
+
+<script type="text/babel">
+// ─── Device frame wrappers ───
+// Render each screen inside both iOS and Android frames, side by side.
+
+function IOSShell({ children, tab, hideTabs }) {
+  return (
+    <div style={{
+      width: 402, height: 874, borderRadius: 48, overflow: 'hidden',
+      position: 'relative', background: WH.void,
+      boxShadow: '0 40px 80px rgba(0,0,0,0.35), 0 0 0 8px #1a1a1a, 0 0 0 9px #333',
+    }}>
+      {/* dynamic island */}
+      <div style={{
+        position: 'absolute', top: 11, left: '50%', transform: 'translateX(-50%)',
+        width: 126, height: 37, borderRadius: 24, background: '#000', zIndex: 200,
+      }} />
+      {/* iOS status bar overlay (light) */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 150, pointerEvents: 'none' }}>
+        <IOSStatusBar dark={true}/>
+      </div>
+      {/* content */}
+      <div style={{ height: '100%', position: 'relative' }}>
+        {children}
+        {tab && !hideTabs && <WHTabBar active={tab}/>}
+      </div>
+      {/* home indicator */}
+      <div style={{
+        position: 'absolute', bottom: 8, left: 0, right: 0, zIndex: 250,
+        display: 'flex', justifyContent: 'center', pointerEvents: 'none',
+      }}>
+        <div style={{ width: 139, height: 5, borderRadius: 100, background: 'rgba(255,255,255,0.6)' }}/>
+      </div>
+    </div>
+  );
+}
+
+function AndroidShell({ children, tab, hideTabs }) {
+  return (
+    <div style={{
+      width: 412, height: 892, borderRadius: 18, overflow: 'hidden',
+      background: WH.void,
+      border: `8px solid #2a2a2e`,
+      boxShadow: '0 30px 80px rgba(0,0,0,0.35)',
+      position: 'relative',
+    }}>
+      {/* Android status bar overlay (dark) */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 150, pointerEvents: 'none' }}>
+        <div style={{
+          height: 36, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '0 20px', fontFamily: 'Roboto, system-ui', color: WH.parchment, fontSize: 13, fontWeight: 500,
+        }}>
+          <span>9:30</span>
+          <div style={{ position: 'absolute', left: '50%', top: 8, transform: 'translateX(-50%)', width: 20, height: 20, borderRadius: '50%', background: '#111' }}/>
+          <div style={{ display: 'flex', gap: 6 }}>
+            <svg width="14" height="14" viewBox="0 0 16 16"><path d="M8 13.3L.67 5.97a10.37 10.37 0 0114.66 0L8 13.3z" fill={WH.parchment}/></svg>
+            <svg width="14" height="14" viewBox="0 0 16 16"><rect x="4" y="2" width="8" height="12" rx="1.5" fill={WH.parchment}/></svg>
+          </div>
+        </div>
+      </div>
+      <div style={{ height: '100%', position: 'relative' }}>
+        {children}
+        {tab && !hideTabs && <WHTabBar active={tab}/>}
+      </div>
+      {/* nav pill */}
+      <div style={{
+        position: 'absolute', bottom: 4, left: 0, right: 0, zIndex: 250,
+        display: 'flex', justifyContent: 'center', pointerEvents: 'none',
+      }}>
+        <div style={{ width: 108, height: 4, borderRadius: 2, background: 'rgba(255,255,255,0.5)' }}/>
+      </div>
+    </div>
+  );
+}
+
+function PairArtboard({ label, Screen, tab, hideTabs, gap = 24 }) {
+  return (
+    <div style={{ display: 'flex', gap, alignItems: 'flex-start' }}>
+      <DCArtboard label={`${label} · iOS`} width={402} height={874} style={{ borderRadius: 48, background: WH.void }}>
+        <IOSShell tab={tab} hideTabs={hideTabs}><Screen/></IOSShell>
+      </DCArtboard>
+      <DCArtboard label={`${label} · Android`} width={412} height={892} style={{ borderRadius: 18, background: WH.void }}>
+        <AndroidShell tab={tab} hideTabs={hideTabs}><Screen/></AndroidShell>
+      </DCArtboard>
+    </div>
+  );
+}
+
+function LangToggle() {
+  const { lang, setLang } = useLocale();
+  return (
+    <div style={{
+      position: 'fixed', top: 16, right: 16, zIndex: 1000,
+      display: 'flex', gap: 0, border: '0.5px solid #7a5d2e',
+      background: '#fdfbf5', fontFamily: 'ui-monospace, Menlo, monospace',
+      fontSize: 11, letterSpacing: 2, textTransform: 'uppercase',
+      boxShadow: '0 4px 14px rgba(0,0,0,0.12)',
+    }}>
+      {['es', 'en'].map(l => (
+        <div key={l} onClick={() => setLang(l)} style={{
+          padding: '8px 14px', cursor: 'pointer',
+          background: lang === l ? '#1a1510' : 'transparent',
+          color: lang === l ? '#c9a66b' : '#7a5d2e',
+        }}>{l}</div>
+      ))}
+    </div>
+  );
+}
+
+function App() {
+  const { t, lang } = useLocale();
+  return (
+    <DesignCanvas>
+      <LangToggle/>
+      {/* Title strip */}
+      <div style={{ padding: '0 60px 60px', maxWidth: 1000 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 8 }}>
+          <WHCosmereMark size={44} color="#7a5d2e"/>
+          <div>
+            <div style={{ fontFamily: WH.fontDisplay, fontSize: 44, fontWeight: 500, color: '#1a1510', letterSpacing: -0.8, lineHeight: 1 }}>
+              <span style={{ fontStyle: 'italic', fontWeight: 400 }}>World</span>
+              <span style={{ color: '#7a5d2e', fontWeight: 600 }}>hopper</span>
+            </div>
+            <div style={{ marginTop: 6, fontFamily: WH.fontMono, fontSize: 10, color: '#5a4a2a', letterSpacing: 3, textTransform: 'uppercase' }}>
+              {t.tagline} · KMP Design Exploration
+            </div>
+          </div>
+        </div>
+        <div style={{ marginTop: 20, fontFamily: WH.fontDisplay, fontSize: 16, fontStyle: 'italic', color: '#4a3a22', lineHeight: 1.6, maxWidth: 700 }}>
+          Encyclopedia + forum for Brandon Sanderson's connected universe. Aesthetic direction: dark, mystical — deep blacks,
+          mist, liquid metal. Each world carries a subtle accent; the interface feels like an old leather grimoire lit by starlight.
+          All glyphs and symbols below are original. Pan / pinch this canvas.
+        </div>
+
+        {/* Palette bar */}
+        <div style={{ marginTop: 28, display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+          {[
+            { n: 'Void', c: '#05060a' },
+            { n: 'Abyss', c: '#0a0c12' },
+            { n: 'Ink', c: '#101218' },
+            { n: 'Aurum', c: '#c9a66b' },
+            { n: 'Parchment', c: '#e8e4d6' },
+          ].map(s => (
+            <div key={s.n}>
+              <div style={{ width: 64, height: 44, background: s.c, border: '0.5px solid rgba(0,0,0,0.2)' }}/>
+              <div style={{ marginTop: 4, fontFamily: WH.fontMono, fontSize: 9, color: '#4a3a22', letterSpacing: 1, textTransform: 'uppercase' }}>{s.n}</div>
+            </div>
+          ))}
+          <div style={{ width: 20 }}/>
+          {Object.entries(WH.worlds).map(([k, w]) => (
+            <div key={k}>
+              <div style={{ width: 40, height: 44, background: w.accent, border: '0.5px solid rgba(0,0,0,0.2)' }}/>
+              <div style={{ marginTop: 4, fontFamily: WH.fontMono, fontSize: 8, color: '#4a3a22', letterSpacing: 0.8, textTransform: 'uppercase', maxWidth: 40 }}>{w.name}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── 1. Entry sequence ── */}
+      <DCSection title="1 · Entry sequence" subtitle="Splash → Login → Register → Forgot. The portal metaphor: concentric metal rings expand outward.">
+        <PairArtboard label="Splash" Screen={SplashScreen} hideTabs/>
+        <PairArtboard label="Login" Screen={LoginScreen} hideTabs/>
+        <PairArtboard label="Register" Screen={RegisterScreen} hideTabs/>
+        <PairArtboard label="Forgot password" Screen={ForgotScreen} hideTabs/>
+        <DCPostIt top={-40} left={10} rotate={-3} width={200}>
+          El logo 'cosmere mark' es original: ocho puntos orbitando dos anillos concéntricos. Interpretación propia.
+        </DCPostIt>
+      </DCSection>
+
+      {/* ── 2. Core nav ── */}
+      <DCSection title="2 · Core navigation (5 tabs)" subtitle="Home · Worlds · Library · Forum · Me. Glass bottom bar; aurum accent on active.">
+        <PairArtboard label="Home feed" Screen={HomeScreen} tab="home"/>
+        <PairArtboard label="Worlds atlas" Screen={WorldsScreen} tab="worlds"/>
+        <PairArtboard label="Library" Screen={LibraryScreen} tab="library"/>
+        <PairArtboard label="Forum" Screen={ForumScreen} tab="forum"/>
+        <PairArtboard label="Profile" Screen={ProfileScreen} tab="me"/>
+      </DCSection>
+
+      {/* ── 3. Encyclopedia ── */}
+      <DCSection title="3 · The Archive" subtitle="Deep-content screens reachable from Home / Worlds.">
+        <PairArtboard label="Characters" Screen={CharactersScreen}/>
+        <PairArtboard label="Magic systems" Screen={MagicScreen}/>
+        <PairArtboard label="Cosmic timeline" Screen={TimelineScreen}/>
+        <PairArtboard label="Global search" Screen={SearchScreen}/>
+      </DCSection>
+
+      {/* ── 4. Social + personal ── */}
+      <DCSection title="4 · Discourse & marginalia" subtitle="Forum thread with per-saga spoiler tags; personal notes & theories; settings.">
+        <PairArtboard label="Thread detail" Screen={ThreadScreen}/>
+        <PairArtboard label="Notes / theories" Screen={NotesScreen}/>
+        <PairArtboard label="Settings" Screen={SettingsScreen}/>
+        <DCPostIt top={-40} left={10} rotate={2} width={220}>
+          Los foros obligan a elegir nivel de spoiler al crear thread (por saga). Chip visible al listarlos.
+        </DCPostIt>
+      </DCSection>
+
+      {/* ── 5. Navigation map ── */}
+      <DCSection title="5 · Screen map" subtitle="Flow diagram for KMP implementation.">
+        <DCArtboard label="Navigation graph" width={1100} height={540} style={{ background: '#fdfbf5', borderRadius: 4 }}>
+          <NavMap/>
+        </DCArtboard>
+      </DCSection>
+
+      <div style={{ height: 120 }}/>
+    </DesignCanvas>
+  );
+}
+
+function NavMap() {
+  const node = (x, y, label, kind = 'default', w = 130) => {
+    const colors = {
+      entry:   { bg: '#1a1510', text: '#e8e4d6', border: '#c9a66b' },
+      tab:     { bg: '#c9a66b', text: '#1a1510', border: '#8c7143' },
+      detail:  { bg: '#fdfbf5', text: '#1a1510', border: '#8c7143' },
+      default: { bg: '#fdfbf5', text: '#1a1510', border: '#bfa880' },
+    };
+    const c = colors[kind];
+    return (
+      <div style={{
+        position: 'absolute', left: x, top: y, width: w,
+        padding: '10px 12px',
+        background: c.bg, color: c.text, border: `0.5px solid ${c.border}`,
+        fontFamily: WH.fontUI, fontSize: 11, fontWeight: 500,
+        textAlign: 'center', letterSpacing: 0.2,
+        boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+      }}>{label}</div>
+    );
+  };
+  const line = (x1, y1, x2, y2, dashed = false) => (
+    <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#8c7143" strokeWidth={0.8} strokeDasharray={dashed ? '3 3' : '0'}/>
+  );
+  return (
+    <div style={{ position: 'relative', width: '100%', height: '100%', padding: 20 }}>
+      <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+        {/* splash → login */}
+        {line(135, 70, 235, 70)}
+        {line(370, 70, 470, 70)}
+        {line(300, 90, 300, 130)}
+        {line(300, 90, 430, 130)}
+        {/* login → tabs (center hub) */}
+        {line(540, 60, 650, 60)}
+        {line(650, 60, 650, 180)}
+        {/* hub vertical */}
+        {line(650, 180, 650, 460)}
+        {/* hub branches */}
+        {line(650, 210, 810, 210)}
+        {line(650, 260, 810, 260)}
+        {line(650, 310, 810, 310)}
+        {line(650, 360, 810, 360)}
+        {line(650, 410, 810, 410)}
+        {/* sub-routes */}
+        {line(945, 210, 1045, 210, true)}
+        {line(945, 260, 1045, 260, true)}
+        {line(945, 310, 1045, 310, true)}
+        {line(945, 410, 1045, 410, true)}
+      </svg>
+
+      {/* title */}
+      <div style={{ fontFamily: WH.fontDisplay, fontSize: 20, color: '#1a1510', letterSpacing: -0.3, marginBottom: 12 }}>
+        <span style={{ fontStyle: 'italic' }}>Worldhopper</span> · screen graph
+      </div>
+
+      {/* entry */}
+      {node(10,  55, 'Splash', 'entry')}
+      {node(210, 55, 'Login', 'entry')}
+      {node(240, 115, 'Register', 'entry')}
+      {node(380, 115, 'Forgot', 'entry')}
+
+      {/* hub */}
+      {node(440, 45, 'Main (tabs)', 'tab', 160)}
+
+      {/* tabs */}
+      {node(800, 195, '🏠  Home', 'tab')}
+      {node(800, 245, '🌐  Worlds', 'tab')}
+      {node(800, 295, '📖  Library', 'tab')}
+      {node(800, 345, '💬  Forum', 'tab')}
+      {node(800, 395, '👤  Me', 'tab')}
+
+      {/* details */}
+      {node(1040, 195, 'World detail', 'detail')}
+      {node(1040, 245, 'Characters · Magic · Timeline', 'detail', 180)}
+      {node(1040, 295, 'Book · Reader', 'detail')}
+      {node(1040, 395, 'Notes · Settings', 'detail')}
+
+      {/* global */}
+      {node(440, 250, '🔍  Global search', 'default', 160)}
+      {node(440, 305, '🔔  Notifications', 'default', 160)}
+
+      {/* legend */}
+      <div style={{ position: 'absolute', bottom: 20, left: 20, display: 'flex', gap: 20, fontFamily: WH.fontMono, fontSize: 9, color: '#5a4a2a', letterSpacing: 0.8, textTransform: 'uppercase' }}>
+        <span>— nav  </span>
+        <span>--- route</span>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
