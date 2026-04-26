@@ -320,6 +320,61 @@ object CVIcons {
         }.build()
     }
 
+    val Bookmark: ImageVector by lazy {
+        ImageVector.Builder("Bookmark", 16.dp, 20.dp, 16f, 20f).apply {
+            path(
+                stroke = SolidColor(Color.White), strokeLineWidth = 1.2f,
+                strokeLineJoin = StrokeJoin.Round,
+            ) {
+                moveTo(2f, 1f); lineTo(14f, 1f); lineTo(14f, 19f)
+                lineTo(8f, 14f); lineTo(2f, 19f); close()
+            }
+        }.build()
+    }
+
+    val BookmarkFilled: ImageVector by lazy {
+        ImageVector.Builder("BookmarkFilled", 16.dp, 20.dp, 16f, 20f).apply {
+            path(
+                fill = SolidColor(Color.White),
+                stroke = SolidColor(Color.White), strokeLineWidth = 1.2f,
+                strokeLineJoin = StrokeJoin.Round,
+            ) {
+                moveTo(2f, 1f); lineTo(14f, 1f); lineTo(14f, 19f)
+                lineTo(8f, 14f); lineTo(2f, 19f); close()
+            }
+        }.build()
+    }
+
+    val Share: ImageVector by lazy {
+        ImageVector.Builder("Share", 18.dp, 18.dp, 18f, 18f).apply {
+            path(
+                stroke = SolidColor(Color.White), strokeLineWidth = 1.2f,
+                strokeLineCap = StrokeCap.Round, strokeLineJoin = StrokeJoin.Round,
+            ) {
+                moveTo(6f, 10f); lineTo(12f, 7f)
+                moveTo(6f, 10f); lineTo(12f, 13f)
+            }
+            path(stroke = SolidColor(Color.White), strokeLineWidth = 1.2f) {
+                addOval(centerX = 4.5f, centerY = 10f, radiusX = 2f, radiusY = 2f)
+                addOval(centerX = 13.5f, centerY = 5.5f, radiusX = 2f, radiusY = 2f)
+                addOval(centerX = 13.5f, centerY = 14.5f, radiusX = 2f, radiusY = 2f)
+            }
+        }.build()
+    }
+
+    val Send: ImageVector by lazy {
+        ImageVector.Builder("Send", 18.dp, 18.dp, 18f, 18f).apply {
+            path(
+                stroke = SolidColor(Color.White), strokeLineWidth = 1.2f,
+                strokeLineJoin = StrokeJoin.Round,
+            ) {
+                moveTo(2f, 2f); lineTo(16f, 9f); lineTo(2f, 16f)
+                lineTo(2f, 10f); lineTo(10f, 9f); lineTo(2f, 8f)
+                close()
+            }
+        }.build()
+    }
+
     val More: ImageVector by lazy {
         ImageVector.Builder("More", 16.dp, 4.dp, 16f, 4f).apply {
             path(fill = SolidColor(Color.White)) {
