@@ -40,8 +40,11 @@ fun CVCosmereMark(
 
         val rOuter = s * 0.42f
         val rInner = s * 0.24f
-        val rDotOrbit = s * 0.42f
+        val rDotOrbit = (rInner + rOuter) / 2f   // between the two rings
         val rCenter = s * 0.04f
+        val dotBig = s * 0.045f                   // proportional dot sizes
+        val dotSmall = s * 0.028f
+        val halfPI = PI.toFloat() / 2f
 
         // Outer ring (0.85 alpha)
         drawCircle(
@@ -66,32 +69,32 @@ fun CVCosmereMark(
             center = Offset(cx, cy),
         )
 
-        // Orbiting dots
+        // 8 orbiting dots at 45° increments, first dot at 12 o'clock (-π/2)
         for (i in 0 until dots) {
-            val angle = (i.toFloat() / dots) * 2f * PI.toFloat() - PI.toFloat() / 2f
+            val angle = (i.toFloat() / dots) * 2f * PI.toFloat() - halfPI
             val x = cx + cos(angle) * rDotOrbit
             val y = cy + sin(angle) * rDotOrbit
             val isBig = i == 0
             drawCircle(
                 color = color.copy(alpha = if (isBig) 1f else 0.75f),
-                radius = if (isBig) 2.4f else 1.4f,
+                radius = if (isBig) dotBig else dotSmall,
                 center = Offset(x, y),
             )
         }
 
-        // Radial hairlines (every 90°, i.e. every other dot for 8 dots)
-        for (i in 0 until dots) {
-            if (i % 2 != 0) continue
-            val angle = (i.toFloat() / dots) * 2f * PI.toFloat() - PI.toFloat() / 2f
+        // 4 radial hairlines at 0°, 90°, 180°, 270° (every other dot)
+        // Short segment (~6 dp) bridging inner ring → outer ring
+        for (i in 0 until dots step 2) {
+            val angle = (i.toFloat() / dots) * 2f * PI.toFloat() - halfPI
             val x1 = cx + cos(angle) * rInner
             val y1 = cy + sin(angle) * rInner
             val x2 = cx + cos(angle) * rOuter
             val y2 = cy + sin(angle) * rOuter
             drawLine(
-                color = color.copy(alpha = 0.4f),
+                color = color.copy(alpha = 0.5f),
                 start = Offset(x1, y1),
                 end = Offset(x2, y2),
-                strokeWidth = strokeWidth * 0.5f,
+                strokeWidth = strokeWidth,
             )
         }
     }

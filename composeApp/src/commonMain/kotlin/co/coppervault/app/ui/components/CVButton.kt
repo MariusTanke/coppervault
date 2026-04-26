@@ -119,12 +119,13 @@ fun CVButton(
             } else {
                 Text(
                     text = text.uppercase(),
-                    color = contentColor.copy(alpha = alpha),
-                    fontFamily = CVTheme.typography.body.fontFamily,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = size.fontSize.sp,
-                    letterSpacing = (size.fontSize * 0.08).sp,
-                    textAlign = TextAlign.Center,
+                    style = CVTheme.typography.uiS.copy(
+                        color = contentColor.copy(alpha = alpha),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = size.fontSize.sp,
+                        letterSpacing = (size.fontSize * 0.08).sp,
+                        textAlign = TextAlign.Center,
+                    ),
                 )
             }
         }

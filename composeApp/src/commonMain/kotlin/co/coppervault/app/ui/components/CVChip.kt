@@ -23,7 +23,7 @@ import co.coppervault.app.ui.theme.CVTheme
 import co.coppervault.app.ui.theme.Roshar
 import co.coppervault.app.ui.theme.Scadrial
 import co.coppervault.app.ui.theme.Sel
-import co.coppervault.app.ui.theme.Void
+import co.coppervault.app.ui.theme.Abyss
 
 @Composable
 fun CVChip(
@@ -61,7 +61,7 @@ fun CVChip(
                 fontWeight = FontWeight.Medium,
                 letterSpacing = CVTheme.typography.monoMeta.letterSpacing,
             ),
-            color = if (filled) Void else accent,
+            color = if (filled) Abyss else accent,
         )
     }
 }

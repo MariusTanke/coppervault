@@ -24,9 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import co.coppervault.app.ui.theme.Ash
 import co.coppervault.app.ui.theme.Aurum
 import co.coppervault.app.ui.theme.CVTheme
@@ -61,7 +63,11 @@ fun CVInput(
             onValueChange = onValueChange,
             enabled = enabled,
             singleLine = true,
-            textStyle = CVTheme.typography.body.copy(color = Parchment),
+            textStyle = TextStyle(
+                color = Parchment,
+                fontFamily = CVTheme.typography.kicker.fontFamily, // JetBrains Mono
+                fontSize = 14.sp,
+            ),
             cursorBrush = SolidColor(Aurum),
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
             decorationBox = { innerTextField ->
