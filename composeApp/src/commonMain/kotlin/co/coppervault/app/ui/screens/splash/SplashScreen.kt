@@ -32,6 +32,7 @@ import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.CVMistBg
 import co.coppervault.app.ui.components.CVWordmark
 import co.coppervault.app.ui.screens.auth.LoginScreen
+import co.coppervault.app.ui.strings.CVStrings
 import co.coppervault.app.ui.theme.Fog
 import kotlinx.coroutines.delay
 
@@ -40,6 +41,7 @@ class SplashScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
+        val t = CVStrings.current
 
         // Auto-navigate after 2.5 s
         LaunchedEffect(Unit) {
@@ -105,7 +107,7 @@ class SplashScreen : Screen {
 
                     // Tagline kicker (fade-in with wordmark)
                     CVKicker(
-                        text = "A Companion to the Cosmere",
+                        text = t.tagline,
                         color = Fog,
                         size = 9,
                         modifier = Modifier.alpha(textAlpha),

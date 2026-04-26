@@ -34,12 +34,12 @@ import co.coppervault.app.navigation.FakeAuth
 import co.coppervault.app.navigation.MainScaffold
 import co.coppervault.app.ui.components.CVButton
 import co.coppervault.app.ui.components.CVButtonSize
-import co.coppervault.app.ui.components.CVButtonVariant
 import co.coppervault.app.ui.components.CVCosmereMark
 import co.coppervault.app.ui.components.CVIcons
 import co.coppervault.app.ui.components.CVInput
 import co.coppervault.app.ui.components.CVWordmark
 import co.coppervault.app.ui.components.auth.AuthShell
+import co.coppervault.app.ui.strings.CVStrings
 import co.coppervault.app.ui.theme.Ash
 import co.coppervault.app.ui.theme.Aurum
 import co.coppervault.app.ui.theme.CVTheme
@@ -56,6 +56,7 @@ class LoginScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val scope = rememberCoroutineScope()
+        val t = CVStrings.current
 
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
@@ -67,8 +68,8 @@ class LoginScreen : Screen {
 
         fun validate(): Boolean {
             submitted = true
-            emailError = if (email.isBlank()) "Required" else null
-            passwordError = if (password.isBlank()) "Required" else null
+            emailError = if (email.isBlank()) t.required else null
+            passwordError = if (password.isBlank()) t.required else null
             return emailError == null && passwordError == null
         }
 
@@ -83,7 +84,7 @@ class LoginScreen : Screen {
                 CVWordmark(size = 26)
                 Spacer(Modifier.height(10.dp))
                 Text(
-                    text = "OPEN THE PORTAL",
+                    text = t.openPortal,
                     style = CVTheme.typography.monoMeta.copy(
                         fontSize = 9.sp,
                         letterSpacing = 3.sp,
@@ -95,15 +96,15 @@ class LoginScreen : Screen {
 
             Spacer(Modifier.height(36.dp))
 
-            // ── Form ────────────────────────────────────────
+            // ── Form ────────────────��───────────────────────
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 CVInput(
                     value = email,
                     onValueChange = {
                         email = it
-                        if (submitted) emailError = if (it.isBlank()) "Required" else null
+                        if (submitted) emailError = if (it.isBlank()) t.required else null
                     },
-                    placeholder = "Email or username",
+                    placeholder = t.emailOrUser,
                     icon = CVIcons.Mail,
                     isError = emailError != null,
                     errorHint = emailError,
@@ -112,9 +113,9 @@ class LoginScreen : Screen {
                     value = password,
                     onValueChange = {
                         password = it
-                        if (submitted) passwordError = if (it.isBlank()) "Required" else null
+                        if (submitted) passwordError = if (it.isBlank()) t.required else null
                     },
-                    placeholder = "Password",
+                    placeholder = t.password,
                     icon = CVIcons.Lock,
                     isPassword = true,
                     isError = passwordError != null,
@@ -145,19 +146,19 @@ class LoginScreen : Screen {
                         contentAlignment = Alignment.Center,
                     ) {
                         if (rememberMe) {
-                            Text("✓", fontSize = 9.sp, color = CVTheme.colors.abyss)
+                            Text("\u2713", fontSize = 9.sp, color = CVTheme.colors.abyss)
                         }
                     }
                     Spacer(Modifier.width(8.dp))
                     Text(
-                        text = "Remember me",
+                        text = t.rememberMe,
                         style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
                         color = Fog,
                     )
                 }
 
                 Text(
-                    text = "Forgot?",
+                    text = t.forgot,
                     style = CVTheme.typography.uiS.copy(fontSize = 11.sp, letterSpacing = 0.3.sp),
                     color = Aurum,
                     modifier = Modifier.clickable { navigator.push(ForgotScreen()) },
@@ -166,9 +167,9 @@ class LoginScreen : Screen {
 
             Spacer(Modifier.height(24.dp))
 
-            // ── CTA ─────────────────────────────────────────
+            // ── CTA ────────────────────────────────────────���
             CVButton(
-                text = "Enter the Cosmere",
+                text = t.enterCosmere,
                 size = CVButtonSize.L,
                 fullWidth = true,
                 loading = loading,
@@ -192,7 +193,7 @@ class LoginScreen : Screen {
             ) {
                 Box(Modifier.weight(1f).height(0.5.dp).background(Stone))
                 Text(
-                    text = "  OR HOP VIA  ",
+                    text = "  ${t.orHopVia}  ",
                     style = CVTheme.typography.monoMeta.copy(
                         fontSize = 9.sp,
                         letterSpacing = 2.sp,
@@ -207,9 +208,7 @@ class LoginScreen : Screen {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                // Google button
                 SocialButton(label = "Google", glyph = "G", modifier = Modifier.weight(1f))
-                // Apple button — U+F8FF Apple logo, fallback "A"
                 SocialButton(label = "Apple", glyph = "\uF8FF", modifier = Modifier.weight(1f))
             }
 
@@ -221,12 +220,12 @@ class LoginScreen : Screen {
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Text(
-                    text = "New traveler? ",
+                    text = t.newTraveler,
                     style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
                     color = Fog,
                 )
                 Text(
-                    text = "Begin journey",
+                    text = t.beginJourney,
                     style = CVTheme.typography.uiS.copy(fontSize = 12.sp, fontWeight = FontWeight.Bold),
                     color = Aurum,
                     modifier = Modifier.clickable { navigator.push(RegisterScreen()) },

@@ -1,7 +1,6 @@
 package co.coppervault.app.ui.screens.auth
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -30,6 +29,7 @@ import co.coppervault.app.ui.components.CVIcons
 import co.coppervault.app.ui.components.CVInput
 import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.auth.AuthShell
+import co.coppervault.app.ui.strings.CVStrings
 import co.coppervault.app.ui.theme.Ash
 import co.coppervault.app.ui.theme.Aurum
 import co.coppervault.app.ui.theme.CVTheme
@@ -41,6 +41,7 @@ class ForgotScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
+        val t = CVStrings.current
         var email by remember { mutableStateOf("") }
         var emailErr by remember { mutableStateOf<String?>(null) }
 
@@ -50,39 +51,37 @@ class ForgotScreen : Screen {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.clickable { navigator.pop() },
             ) {
-                Icon(CVIcons.Back, contentDescription = "Back", tint = Ash, modifier = Modifier.size(16.dp))
+                Icon(CVIcons.Back, contentDescription = t.back, tint = Ash, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(8.dp))
-                CVKicker("Back", color = Fog, size = 10)
+                CVKicker(t.back, color = Fog, size = 10)
             }
 
             Spacer(Modifier.height(28.dp))
 
             // ── Header ──────────────────────────────────────
-            Column {
-                Text(
-                    text = "Lost",
-                    style = CVTheme.typography.displayXL.copy(
-                        fontSize = 30.sp,
-                        lineHeight = 33.sp,
-                        letterSpacing = (-0.5).sp,
-                    ),
-                    color = Parchment,
-                )
-                Text(
-                    text = "between worlds",
-                    style = CVTheme.typography.displayXL.copy(
-                        fontSize = 30.sp,
-                        lineHeight = 33.sp,
-                        fontStyle = FontStyle.Italic,
-                        letterSpacing = (-0.5).sp,
-                    ),
-                    color = Aurum,
-                )
-            }
+            Text(
+                text = t.lost,
+                style = CVTheme.typography.displayXL.copy(
+                    fontSize = 30.sp,
+                    lineHeight = 33.sp,
+                    letterSpacing = (-0.5).sp,
+                ),
+                color = Parchment,
+            )
+            Text(
+                text = t.betweenWorlds,
+                style = CVTheme.typography.displayXL.copy(
+                    fontSize = 30.sp,
+                    lineHeight = 33.sp,
+                    fontStyle = FontStyle.Italic,
+                    letterSpacing = (-0.5).sp,
+                ),
+                color = Aurum,
+            )
 
             Spacer(Modifier.height(12.dp))
             Text(
-                text = "Drop your email and we\u2019ll send you a thread back.",
+                text = t.forgotBody,
                 style = CVTheme.typography.uiL.copy(
                     fontSize = 13.sp,
                     lineHeight = 20.8.sp,
@@ -96,7 +95,7 @@ class ForgotScreen : Screen {
             CVInput(
                 value = email,
                 onValueChange = { email = it; emailErr = null },
-                placeholder = "Email",
+                placeholder = t.email,
                 icon = CVIcons.Mail,
                 isError = emailErr != null,
                 errorHint = emailErr,
@@ -106,12 +105,12 @@ class ForgotScreen : Screen {
 
             // ── CTA ─────────────────────────────────────────
             CVButton(
-                text = "Send Missive",
+                text = t.sendMissive,
                 size = CVButtonSize.L,
                 fullWidth = true,
                 onClick = {
                     if (email.isBlank()) {
-                        emailErr = "Required"
+                        emailErr = t.required
                     } else {
                         navigator.pop()
                     }
@@ -122,7 +121,7 @@ class ForgotScreen : Screen {
 
             // ── Bottom epigraph ─────────────────────────────
             CVEpigraph(
-                quote = "The journey before the destination.",
+                quote = t.journeyBefore,
                 size = 11,
                 modifier = Modifier.padding(top = 40.dp).align(Alignment.CenterHorizontally),
             )

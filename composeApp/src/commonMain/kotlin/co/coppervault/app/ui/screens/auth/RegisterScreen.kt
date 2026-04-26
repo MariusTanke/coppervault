@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +42,7 @@ import co.coppervault.app.ui.components.CVIcons
 import co.coppervault.app.ui.components.CVInput
 import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.auth.AuthShell
+import co.coppervault.app.ui.strings.CVStrings
 import co.coppervault.app.ui.theme.Ash
 import co.coppervault.app.ui.theme.Aurum
 import co.coppervault.app.ui.theme.CVTheme
@@ -59,6 +59,7 @@ class RegisterScreen : Screen {
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val scope = rememberCoroutineScope()
+        val t = CVStrings.current
 
         var displayName by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
@@ -77,22 +78,22 @@ class RegisterScreen : Screen {
 
         fun validateAll(): Boolean {
             nameErr = when {
-                displayName.isBlank() -> "Required"
-                !nameRegex.matches(displayName) -> "3-20 chars, letters/numbers/_"
+                displayName.isBlank() -> t.required
+                !nameRegex.matches(displayName) -> t.nameLenRule
                 else -> null
             }
             emailErr = when {
-                email.isBlank() -> "Required"
-                !emailRegex.matches(email) -> "Invalid email"
+                email.isBlank() -> t.required
+                !emailRegex.matches(email) -> t.invalidEmail
                 else -> null
             }
             pwErr = when {
-                password.length < 8 -> "At least 8 characters"
-                !password.any { it.isDigit() } -> "Must contain a number"
+                password.length < 8 -> t.pwMinLength
+                !password.any { it.isDigit() } -> t.pwNeedsNumber
                 else -> null
             }
             confirmErr = when {
-                confirm != password -> "Passwords don't match"
+                confirm != password -> t.pwNoMatch
                 else -> null
             }
             return nameErr == null && emailErr == null && pwErr == null && confirmErr == null
@@ -104,9 +105,9 @@ class RegisterScreen : Screen {
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.clickable { navigator.pop() },
             ) {
-                Icon(CVIcons.Back, contentDescription = "Back", tint = Ash, modifier = Modifier.size(16.dp))
+                Icon(CVIcons.Back, contentDescription = t.back, tint = Ash, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(8.dp))
-                CVKicker("Back", color = Fog, size = 10)
+                CVKicker(t.back, color = Fog, size = 10)
             }
 
             Spacer(Modifier.height(28.dp))
@@ -114,7 +115,7 @@ class RegisterScreen : Screen {
             // ── Header ──────────────────────────────────────
             Column {
                 Text(
-                    text = "Begin your",
+                    text = t.beginYour,
                     style = CVTheme.typography.displayXL.copy(
                         fontSize = 30.sp,
                         lineHeight = 33.sp,
@@ -123,7 +124,7 @@ class RegisterScreen : Screen {
                     color = Parchment,
                 )
                 Text(
-                    text = "journey",
+                    text = t.journey,
                     style = CVTheme.typography.displayXL.copy(
                         fontSize = 30.sp,
                         lineHeight = 33.sp,
@@ -135,7 +136,7 @@ class RegisterScreen : Screen {
             }
             Spacer(Modifier.height(10.dp))
             Text(
-                text = "Your name will be etched in the chronicle",
+                text = t.nameEtched,
                 style = CVTheme.typography.uiS.copy(
                     fontSize = 12.sp,
                     lineHeight = 18.sp,
@@ -150,7 +151,7 @@ class RegisterScreen : Screen {
                 CVInput(
                     value = displayName,
                     onValueChange = { displayName = it; nameErr = null },
-                    placeholder = "Traveler name",
+                    placeholder = t.travelerName,
                     icon = CVIcons.User,
                     isError = nameErr != null,
                     errorHint = nameErr,
@@ -158,7 +159,7 @@ class RegisterScreen : Screen {
                 CVInput(
                     value = email,
                     onValueChange = { email = it; emailErr = null },
-                    placeholder = "Email",
+                    placeholder = t.email,
                     icon = CVIcons.Mail,
                     isError = emailErr != null,
                     errorHint = emailErr,
@@ -166,7 +167,7 @@ class RegisterScreen : Screen {
                 CVInput(
                     value = password,
                     onValueChange = { password = it; pwErr = null },
-                    placeholder = "Password",
+                    placeholder = t.password,
                     icon = CVIcons.Lock,
                     isPassword = true,
                     isError = pwErr != null,
@@ -175,7 +176,7 @@ class RegisterScreen : Screen {
                 CVInput(
                     value = confirm,
                     onValueChange = { confirm = it; confirmErr = null },
-                    placeholder = "Confirm password",
+                    placeholder = t.confirmPw,
                     icon = CVIcons.Lock,
                     isPassword = true,
                     isError = confirmErr != null,
@@ -196,7 +197,7 @@ class RegisterScreen : Screen {
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     Icon(CVIcons.Warn, contentDescription = null, tint = Aurum, modifier = Modifier.size(14.dp))
                     Text(
-                        text = "Coppervault contains community discussion that may include spoilers. You can adjust your ceiling at any time in Settings.",
+                        text = t.spoilerWarn,
                         style = CVTheme.typography.uiS.copy(
                             fontSize = 11.sp,
                             lineHeight = 16.5.sp,
@@ -226,17 +227,17 @@ class RegisterScreen : Screen {
                     contentAlignment = Alignment.Center,
                 ) {
                     if (accepted) {
-                        Text("✓", fontSize = 9.sp, color = Void)
+                        Text("\u2713", fontSize = 9.sp, color = Void)
                     }
                 }
                 Spacer(Modifier.width(10.dp))
                 Text(
                     text = buildAnnotatedString {
                         withStyle(SpanStyle(color = Fog)) {
-                            append("I accept the ")
+                            append(t.acceptCompact)
                         }
                         withStyle(SpanStyle(color = Aurum)) {
-                            append("Compact")
+                            append(t.compact)
                         }
                     },
                     style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
@@ -247,7 +248,7 @@ class RegisterScreen : Screen {
 
             // ── CTA ─────────────────────────────────────────
             CVButton(
-                text = "Open the Portal",
+                text = t.openPortal,
                 size = CVButtonSize.L,
                 fullWidth = true,
                 loading = loading,
