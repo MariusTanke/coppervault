@@ -9,16 +9,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,7 +24,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,18 +35,17 @@ import co.coppervault.app.navigation.MainScaffold
 import co.coppervault.app.ui.components.CVButton
 import co.coppervault.app.ui.components.CVButtonSize
 import co.coppervault.app.ui.components.CVButtonVariant
+import co.coppervault.app.ui.components.CVCosmereMark
 import co.coppervault.app.ui.components.CVIcons
 import co.coppervault.app.ui.components.CVInput
-import co.coppervault.app.ui.components.CVKicker
-import co.coppervault.app.ui.components.CVMistBg
 import co.coppervault.app.ui.components.CVWordmark
+import co.coppervault.app.ui.components.auth.AuthShell
 import co.coppervault.app.ui.theme.Ash
 import co.coppervault.app.ui.theme.Aurum
 import co.coppervault.app.ui.theme.CVTheme
 import co.coppervault.app.ui.theme.Fog
 import co.coppervault.app.ui.theme.Linen
 import co.coppervault.app.ui.theme.Mist
-import co.coppervault.app.ui.theme.Parchment
 import co.coppervault.app.ui.theme.Stone
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -65,7 +59,7 @@ class LoginScreen : Screen {
 
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
-        var remember by remember { mutableStateOf(false) }
+        var rememberMe by remember { mutableStateOf(false) }
         var loading by remember { mutableStateOf(false) }
         var emailError by remember { mutableStateOf<String?>(null) }
         var passwordError by remember { mutableStateOf<String?>(null) }
@@ -78,193 +72,200 @@ class LoginScreen : Screen {
             return emailError == null && passwordError == null
         }
 
-        CVMistBg(modifier = Modifier.fillMaxSize()) {
+        AuthShell {
+            // ── Header: CosmereMark + Wordmark + Kicker ────
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 28.dp, vertical = 54.dp),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // ── Top bar: wordmark + version ─────────────
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    CVWordmark(size = 20)
-                    CVKicker("v0.1 · Alpha", color = Ash, size = 9)
-                }
-
-                Spacer(Modifier.height(40.dp))
-
-                // ── Header ──────────────────────────────────
+                CVCosmereMark(size = 44.dp)
+                Spacer(Modifier.height(16.dp))
+                CVWordmark(size = 26)
+                Spacer(Modifier.height(10.dp))
                 Text(
-                    text = "Welcome back",
-                    style = CVTheme.typography.displayXL,
-                    color = Parchment,
-                )
-                Spacer(Modifier.height(8.dp))
-                Text(
-                    text = "Sign in to continue your reading journey",
-                    style = CVTheme.typography.body,
+                    text = "OPEN THE PORTAL",
+                    style = CVTheme.typography.monoMeta.copy(
+                        fontSize = 9.sp,
+                        letterSpacing = 3.sp,
+                        fontWeight = FontWeight.Medium,
+                    ),
                     color = Fog,
                 )
+            }
 
-                Spacer(Modifier.height(28.dp))
+            Spacer(Modifier.height(36.dp))
 
-                // ── Form ────────────────────────────────────
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    CVInput(
-                        value = email,
-                        onValueChange = {
-                            email = it
-                            if (submitted) emailError = if (it.isBlank()) "Required" else null
-                        },
-                        placeholder = "Email or username",
-                        icon = CVIcons.Mail,
-                        isError = emailError != null,
-                        errorHint = emailError,
-                    )
-                    CVInput(
-                        value = password,
-                        onValueChange = {
-                            password = it
-                            if (submitted) passwordError = if (it.isBlank()) "Required" else null
-                        },
-                        placeholder = "Password",
-                        icon = CVIcons.Lock,
-                        isPassword = true,
-                        isError = passwordError != null,
-                        errorHint = passwordError,
-                    )
-                }
-
-                Spacer(Modifier.height(8.dp))
-
-                // ── Remember + Forgot ───────────────────────
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    // Checkbox
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                        ) { remember = !remember },
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(14.dp)
-                                .then(
-                                    if (remember) Modifier.background(Aurum, RoundedCornerShape(1.dp))
-                                    else Modifier.border(1.dp, Mist, RoundedCornerShape(1.dp))
-                                ),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            if (remember) {
-                                Text("✓", fontSize = 9.sp, color = CVTheme.colors.abyss)
-                            }
-                        }
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            text = "Remember me",
-                            style = CVTheme.typography.uiS,
-                            color = Fog,
-                        )
-                    }
-
-                    // Forgot link
-                    Text(
-                        text = "Forgot?",
-                        style = CVTheme.typography.uiS.copy(fontWeight = FontWeight.Medium),
-                        color = Aurum,
-                        modifier = Modifier.clickable { navigator.push(ForgotScreen()) },
-                    )
-                }
-
-                Spacer(Modifier.height(24.dp))
-
-                // ── CTA ─────────────────────────────────────
-                CVButton(
-                    text = "Enter the Cosmere",
-                    size = CVButtonSize.L,
-                    fullWidth = true,
-                    loading = loading,
-                    onClick = {
-                        if (validate()) {
-                            loading = true
-                            scope.launch {
-                                delay(800)
-                                FakeAuth.isLoggedIn = true
-                                FakeAuth.email = email
-                                navigator.replaceAll(MainScaffold())
-                            }
-                        }
+            // ── Form ────────────────────────────────────────
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                CVInput(
+                    value = email,
+                    onValueChange = {
+                        email = it
+                        if (submitted) emailError = if (it.isBlank()) "Required" else null
                     },
+                    placeholder = "Email or username",
+                    icon = CVIcons.Mail,
+                    isError = emailError != null,
+                    errorHint = emailError,
                 )
+                CVInput(
+                    value = password,
+                    onValueChange = {
+                        password = it
+                        if (submitted) passwordError = if (it.isBlank()) "Required" else null
+                    },
+                    placeholder = "Password",
+                    icon = CVIcons.Lock,
+                    isPassword = true,
+                    isError = passwordError != null,
+                    errorHint = passwordError,
+                )
+            }
 
-                Spacer(Modifier.height(22.dp))
-
-                // ── Divider "OR" ────────────────────────────
+            // ── Remember + Forgot row ───────────────────────
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) { rememberMe = !rememberMe },
                 ) {
-                    Box(Modifier.weight(1f).height(0.5.dp).background(Stone))
+                    Box(
+                        modifier = Modifier
+                            .size(14.dp)
+                            .then(
+                                if (rememberMe) Modifier.background(Aurum, RoundedCornerShape(1.dp))
+                                else Modifier.border(1.dp, Mist, RoundedCornerShape(1.dp))
+                            ),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        if (rememberMe) {
+                            Text("✓", fontSize = 9.sp, color = CVTheme.colors.abyss)
+                        }
+                    }
+                    Spacer(Modifier.width(8.dp))
                     Text(
-                        text = "  OR HOP VIA  ",
-                        style = CVTheme.typography.monoMeta.copy(letterSpacing = 2.sp),
-                        color = Ash,
-                    )
-                    Box(Modifier.weight(1f).height(0.5.dp).background(Stone))
-                }
-
-                Spacer(Modifier.height(22.dp))
-
-                // ── Social buttons ──────────────────────────
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    CVButton(
-                        text = "Google",
-                        variant = CVButtonVariant.Ghost,
-                        size = CVButtonSize.M,
-                        onClick = {},
-                        modifier = Modifier.weight(1f),
-                    )
-                    CVButton(
-                        text = "Apple",
-                        variant = CVButtonVariant.Ghost,
-                        size = CVButtonSize.M,
-                        onClick = {},
-                        modifier = Modifier.weight(1f),
-                    )
-                }
-
-                Spacer(Modifier.weight(1f))
-
-                // ── Bottom link ─────────────────────────────
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    Text(
-                        text = "New to the Cosmere? ",
-                        style = CVTheme.typography.uiL,
+                        text = "Remember me",
+                        style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
                         color = Fog,
                     )
-                    Text(
-                        text = "Create vault",
-                        style = CVTheme.typography.uiL.copy(fontWeight = FontWeight.SemiBold),
-                        color = Aurum,
-                        modifier = Modifier.clickable { navigator.push(RegisterScreen()) },
-                    )
                 }
+
+                Text(
+                    text = "Forgot?",
+                    style = CVTheme.typography.uiS.copy(fontSize = 11.sp, letterSpacing = 0.3.sp),
+                    color = Aurum,
+                    modifier = Modifier.clickable { navigator.push(ForgotScreen()) },
+                )
             }
+
+            Spacer(Modifier.height(24.dp))
+
+            // ── CTA ─────────────────────────────────────────
+            CVButton(
+                text = "Enter the Cosmere",
+                size = CVButtonSize.L,
+                fullWidth = true,
+                loading = loading,
+                onClick = {
+                    if (validate()) {
+                        loading = true
+                        scope.launch {
+                            delay(800)
+                            FakeAuth.isLoggedIn = true
+                            FakeAuth.email = email
+                            navigator.replaceAll(MainScaffold())
+                        }
+                    }
+                },
+            )
+
+            // ── Divider "OR HOP VIA" ────────────────────────
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().padding(vertical = 22.dp),
+            ) {
+                Box(Modifier.weight(1f).height(0.5.dp).background(Stone))
+                Text(
+                    text = "  OR HOP VIA  ",
+                    style = CVTheme.typography.monoMeta.copy(
+                        fontSize = 9.sp,
+                        letterSpacing = 2.sp,
+                    ),
+                    color = Ash,
+                )
+                Box(Modifier.weight(1f).height(0.5.dp).background(Stone))
+            }
+
+            // ── Social row ──────────────────────────────────
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                // Google button
+                SocialButton(label = "Google", glyph = "G", modifier = Modifier.weight(1f))
+                // Apple button — U+F8FF Apple logo, fallback "A"
+                SocialButton(label = "Apple", glyph = "\uF8FF", modifier = Modifier.weight(1f))
+            }
+
+            Spacer(Modifier.weight(1f))
+
+            // ── Bottom link ─────────────────────────────────
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Text(
+                    text = "New traveler? ",
+                    style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
+                    color = Fog,
+                )
+                Text(
+                    text = "Begin journey",
+                    style = CVTheme.typography.uiS.copy(fontSize = 12.sp, fontWeight = FontWeight.Bold),
+                    color = Aurum,
+                    modifier = Modifier.clickable { navigator.push(RegisterScreen()) },
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SocialButton(
+    label: String,
+    glyph: String,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .height(44.dp)
+            .border(0.5.dp, Mist, RoundedCornerShape(2.dp))
+            .background(Linen.copy(alpha = 0.02f), RoundedCornerShape(2.dp)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(
+                text = glyph,
+                style = CVTheme.typography.monoMeta.copy(fontSize = 14.sp),
+                color = Aurum,
+            )
+            Text(
+                text = label,
+                style = CVTheme.typography.uiS.copy(
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                ),
+                color = Linen,
+            )
         }
     }
 }
