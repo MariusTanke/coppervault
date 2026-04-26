@@ -9,11 +9,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,9 +47,8 @@ enum class CVTab(
 /**
  * Bottom tab bar — 5 items, gradient scrim, Aurum active indicator.
  *
- * Height: 84 dp total (8 dp top pad + content + 24 dp bottom safe area).
- * Glass blur is simulated via a gradient scrim (real blur requires
- * platform expect/actual — can be added later).
+ * No Material Surface or Scaffold wrapper. Background is a pure gradient
+ * scrim from Transparent → Abyss so it blends over CVMistBg.
  */
 @Composable
 fun CVTabBar(
@@ -59,30 +56,31 @@ fun CVTabBar(
     onTabSelected: (CVTab) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    Column(
         modifier = modifier
             .fillMaxWidth()
-            .height(84.dp)
             .background(
                 Brush.verticalGradient(
-                    0f to Abyss.copy(alpha = 0.4f),
-                    0.5f to Abyss.copy(alpha = 0.9f),
-                    1f to Abyss.copy(alpha = 0.98f),
+                    0f to Color.Transparent,
+                    0.35f to Abyss.copy(alpha = 0.75f),
+                    1f to Abyss.copy(alpha = 0.92f),
                 )
             ),
     ) {
-        // Top hairline
-        HorizontalDivider(
-            thickness = 0.5.dp,
-            color = Stone,
+        // Top hairline — plain Box, no Material Divider
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .height(0.5.dp)
+                .background(Stone)
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 24.dp)
-                .weight(1f),
+                .padding(top = 8.dp, bottom = 24.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.Top,
         ) {
             CVTab.entries.forEach { tab ->
                 val isActive = tab == activeTab
@@ -133,23 +131,18 @@ fun CVTabBar(
     }
 }
 
-// Helper — Box doesn't have weight in this context so we use Row scope
-@Composable
-private fun Modifier.weight(weight: Float): Modifier = this
-
 // ── Preview ─────────────────────────────────────────────────────────
 
 @Composable
 fun CVTabBarPreview() {
     CVTheme {
         var active by remember { mutableStateOf(CVTab.Home) }
-        Column(
-            modifier = Modifier
-                .background(CVTheme.colors.abyss)
-                .fillMaxWidth(),
+        CVMistBg(
+            modifier = Modifier.fillMaxWidth().height(200.dp),
         ) {
-            Box(Modifier.weight(1f).fillMaxWidth()) // spacer
-            CVTabBar(activeTab = active, onTabSelected = { active = it })
+            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
+                CVTabBar(activeTab = active, onTabSelected = { active = it })
+            }
         }
     }
 }

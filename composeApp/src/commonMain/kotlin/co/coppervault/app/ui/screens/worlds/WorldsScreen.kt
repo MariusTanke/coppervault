@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import co.coppervault.app.ui.components.CVKicker
-import co.coppervault.app.ui.components.CVMistBg
 import co.coppervault.app.ui.theme.Aurum
 import co.coppervault.app.ui.theme.CVTheme
 import co.coppervault.app.ui.theme.Parchment
@@ -21,17 +20,15 @@ class WorldsScreen : Screen {
 
     @Composable
     override fun Content() {
-        CVMistBg(modifier = Modifier.fillMaxSize()) {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    CVKicker("Atlas", color = Aurum, size = 9)
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = "Worlds tab content",
-                        style = CVTheme.typography.displayM,
-                        color = Parchment,
-                    )
-                }
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                CVKicker("Atlas", color = Aurum, size = 9)
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = "Worlds tab content",
+                    style = CVTheme.typography.displayM,
+                    color = Parchment,
+                )
             }
         }
     }

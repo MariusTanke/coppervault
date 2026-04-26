@@ -16,6 +16,7 @@ import co.coppervault.app.navigation.tabs.HomeTab
 import co.coppervault.app.navigation.tabs.LibraryTab
 import co.coppervault.app.navigation.tabs.MeTab
 import co.coppervault.app.navigation.tabs.WorldsTab
+import co.coppervault.app.ui.components.CVMistBg
 import co.coppervault.app.ui.components.CVTab
 import co.coppervault.app.ui.components.CVTabBar
 
@@ -23,21 +24,24 @@ class MainScaffold : Screen {
 
     @Composable
     override fun Content() {
-        TabNavigator(HomeTab) { tabNavigator ->
-            Box(Modifier.fillMaxSize()) {
-                // Tab content with bottom padding for the bar
-                Box(Modifier.fillMaxSize().padding(bottom = 84.dp)) {
-                    CurrentTab()
-                }
+        // MistBg at root level — continuous cosmic background across all tabs
+        CVMistBg(modifier = Modifier.fillMaxSize()) {
+            TabNavigator(HomeTab) { tabNavigator ->
+                Box(Modifier.fillMaxSize()) {
+                    // Tab content with bottom padding to clear the tab bar
+                    Box(Modifier.fillMaxSize().padding(bottom = 64.dp)) {
+                        CurrentTab()
+                    }
 
-                // Bottom tab bar
-                CVTabBar(
-                    activeTab = tabToCV(tabNavigator.current),
-                    onTabSelected = { cvTab ->
-                        tabNavigator.current = cvToTab(cvTab)
-                    },
-                    modifier = Modifier.align(Alignment.BottomCenter),
-                )
+                    // CVTabBar floats over the content — no Material Surface
+                    CVTabBar(
+                        activeTab = tabToCV(tabNavigator.current),
+                        onTabSelected = { cvTab ->
+                            tabNavigator.current = cvToTab(cvTab)
+                        },
+                        modifier = Modifier.align(Alignment.BottomCenter),
+                    )
+                }
             }
         }
     }
