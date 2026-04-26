@@ -29,8 +29,10 @@ import co.coppervault.app.ui.theme.Parchment
 fun CVWordmark(
     modifier: Modifier = Modifier,
     size: Int = 24,
+    tight: Boolean = false,
 ) {
-    val gap = (size * 0.15).dp
+    val gap = if (tight) (size * 0.08).dp else (size * 0.15).dp
+    val ls = if (tight) (size * 0.01).sp else (size * 0.04).sp
 
     Row(
         modifier = modifier,
@@ -42,7 +44,7 @@ fun CVWordmark(
                 fontSize = size.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontStyle = FontStyle.Normal,
-                letterSpacing = (size * 0.04).sp,
+                letterSpacing = ls,
                 lineHeight = size.sp,
             ),
             color = Parchment,
@@ -54,7 +56,7 @@ fun CVWordmark(
                 fontSize = size.sp,
                 fontWeight = FontWeight.Normal,
                 fontStyle = FontStyle.Italic,
-                letterSpacing = (size * 0.04).sp,
+                letterSpacing = ls,
                 lineHeight = size.sp,
             ),
             color = Aurum,

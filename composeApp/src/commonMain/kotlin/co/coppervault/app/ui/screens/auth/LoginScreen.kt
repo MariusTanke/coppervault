@@ -220,7 +220,7 @@ class LoginScreen : Screen {
                 horizontalArrangement = Arrangement.Center,
             ) {
                 Text(
-                    text = t.newTraveler,
+                    text = t.newTraveler + " ",
                     style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
                     color = Fog,
                 )

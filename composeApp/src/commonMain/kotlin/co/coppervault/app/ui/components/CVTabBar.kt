@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.coppervault.app.ui.strings.CVStrings
+import co.coppervault.app.ui.strings.Strings
 import co.coppervault.app.ui.theme.Abyss
 import co.coppervault.app.ui.theme.Ash
 import co.coppervault.app.ui.theme.Aurum
@@ -34,14 +36,14 @@ import co.coppervault.app.ui.theme.CVTheme
 import co.coppervault.app.ui.theme.Stone
 
 enum class CVTab(
-    val label: String,
     val icon: ImageVector,
+    val labelKey: (Strings) -> String,
 ) {
-    Home("Home", CVIcons.Home),
-    Worlds("Worlds", CVIcons.Globe),
-    Library("Library", CVIcons.Book),
-    Forum("Forum", CVIcons.Forum),
-    Me("Me", CVIcons.User),
+    Home(CVIcons.Home, { it.tHome }),
+    Worlds(CVIcons.Globe, { it.tWorlds }),
+    Library(CVIcons.Book, { it.tLibrary }),
+    Forum(CVIcons.Forum, { it.tForum }),
+    Me(CVIcons.User, { it.tMe }),
 }
 
 /**
@@ -75,6 +77,8 @@ fun CVTabBar(
                 .background(Stone)
         )
 
+        val t = CVStrings.current
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -85,6 +89,7 @@ fun CVTabBar(
             CVTab.entries.forEach { tab ->
                 val isActive = tab == activeTab
                 val tint = if (isActive) Aurum else Ash
+                val label = tab.labelKey(t)
 
                 Column(
                     modifier = Modifier
@@ -111,13 +116,13 @@ fun CVTabBar(
 
                     Icon(
                         imageVector = tab.icon,
-                        contentDescription = tab.label,
+                        contentDescription = label,
                         modifier = Modifier.size(20.dp),
                         tint = tint,
                     )
 
                     Text(
-                        text = tab.label.uppercase(),
+                        text = label.uppercase(),
                         style = CVTheme.typography.monoMeta.copy(
                             fontSize = 9.sp,
                             letterSpacing = 1.sp,

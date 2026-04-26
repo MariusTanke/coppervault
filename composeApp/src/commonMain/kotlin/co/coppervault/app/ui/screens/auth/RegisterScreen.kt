@@ -235,6 +235,7 @@ class RegisterScreen : Screen {
                     text = buildAnnotatedString {
                         withStyle(SpanStyle(color = Fog)) {
                             append(t.acceptCompact)
+                            append(" ")
                         }
                         withStyle(SpanStyle(color = Aurum)) {
                             append(t.compact)

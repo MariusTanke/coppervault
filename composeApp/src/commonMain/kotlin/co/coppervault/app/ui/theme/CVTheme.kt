@@ -6,9 +6,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import co.coppervault.app.ui.strings.LocalStrings
-import co.coppervault.app.ui.strings.getSystemLanguage
-import co.coppervault.app.ui.strings.resolveLocale
 
 // ── Color scheme wrapper ────────────────────────────────────────────
 // Coppervault is dark-only. This wrapper gives a typed API and lets us
@@ -41,12 +38,10 @@ fun CVTheme(
     content: @Composable () -> Unit,
 ) {
     val typography = cvTypography()
-    val strings = resolveLocale(getSystemLanguage()).strings
 
     CompositionLocalProvider(
         LocalCVColors provides colors,
         LocalCVTypography provides typography,
-        LocalStrings provides strings,
         content = content,
     )
 }

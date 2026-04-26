@@ -10,10 +10,11 @@ import co.coppervault.app.ui.screens.home.HomeScreen
 import co.coppervault.app.ui.screens.library.LibraryScreen
 import co.coppervault.app.ui.screens.me.MeScreen
 import co.coppervault.app.ui.screens.worlds.WorldsScreen
+import co.coppervault.app.ui.strings.CVStrings
 
 object HomeTab : Tab {
     override val options: TabOptions
-        @Composable get() = TabOptions(index = 0u, title = "Home")
+        @Composable get() = TabOptions(index = 0u, title = CVStrings.current.tHome)
 
     @Composable
     override fun Content() {
@@ -23,7 +24,7 @@ object HomeTab : Tab {
 
 object WorldsTab : Tab {
     override val options: TabOptions
-        @Composable get() = TabOptions(index = 1u, title = "Worlds")
+        @Composable get() = TabOptions(index = 1u, title = CVStrings.current.tWorlds)
 
     @Composable
     override fun Content() {
@@ -33,7 +34,7 @@ object WorldsTab : Tab {
 
 object LibraryTab : Tab {
     override val options: TabOptions
-        @Composable get() = TabOptions(index = 2u, title = "Library")
+        @Composable get() = TabOptions(index = 2u, title = CVStrings.current.tLibrary)
 
     @Composable
     override fun Content() {
@@ -43,7 +44,7 @@ object LibraryTab : Tab {
 
 object ForumTab : Tab {
     override val options: TabOptions
-        @Composable get() = TabOptions(index = 3u, title = "Forum")
+        @Composable get() = TabOptions(index = 3u, title = CVStrings.current.tForum)
 
     @Composable
     override fun Content() {
@@ -53,7 +54,7 @@ object ForumTab : Tab {
 
 object MeTab : Tab {
     override val options: TabOptions
-        @Composable get() = TabOptions(index = 4u, title = "Me")
+        @Composable get() = TabOptions(index = 4u, title = CVStrings.current.tMe)
 
     @Composable
     override fun Content() {

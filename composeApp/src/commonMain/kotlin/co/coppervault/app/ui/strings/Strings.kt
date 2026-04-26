@@ -6,8 +6,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 
 /**
  * All user-facing strings in Coppervault.
- * Each screen section is grouped for clarity.
- * Add new keys here + in [EnStrings] and [EsStrings].
+ * Source of truth: design_handoff_coppervault/design-reference/i18n.jsx
  */
 interface Strings {
 
@@ -16,7 +15,7 @@ interface Strings {
     val splashQuote: String
     val splashAttr: String
 
-    // ── Login ───────────────────────────────────────────
+    // ── Auth ────────────────────────────────────────────
     val openPortal: String
     val emailOrUser: String
     val password: String
@@ -26,8 +25,6 @@ interface Strings {
     val orHopVia: String
     val newTraveler: String
     val beginJourney: String
-
-    // ── Register ────────────────────────────────────────
     val back: String
     val beginYour: String
     val journey: String
@@ -38,15 +35,31 @@ interface Strings {
     val spoilerWarn: String
     val acceptCompact: String
     val compact: String
-
-    // ── Forgot ──────────────────────────────────────────
     val lost: String
     val betweenWorlds: String
     val forgotBody: String
     val sendMissive: String
     val journeyBefore: String
 
-    // ── Validation ─────────��────────────────────────────
+    // ── Home ────────────────────────────────────────────
+    val todaysPage: String
+    val rhythmOf: String
+    val lostLight: String
+    val rhythmBody: String
+    val minRead: String
+    val continueL: String
+    val seeAll: String
+    val fromForum: String
+    val replies: String
+
+    // ── Tabs ────────────────────────────────────────────
+    val tHome: String
+    val tWorlds: String
+    val tLibrary: String
+    val tForum: String
+    val tMe: String
+
+    // ── Validation ──────────────────────────────────────
     val required: String
     val invalidEmail: String
     val nameLenRule: String
@@ -55,92 +68,110 @@ interface Strings {
     val pwNoMatch: String
 }
 
-// ── English ─────────────���────────────────────���──────────
+// ── English (from i18n.jsx en) ──────────────────────────
 
 object EnStrings : Strings {
-    // Splash
     override val tagline = "A Companion to the Cosmere"
-    override val splashQuote = "The most important step a man can take is the next one."
-    override val splashAttr = "Dalinar Kholin"
+    override val splashQuote = "I walk between worlds, as is my wont."
+    override val splashAttr = "From a traveler\u2019s journal"
 
-    // Login
-    override val openPortal = "OPEN THE PORTAL"
+    override val openPortal = "Open the Portal"
     override val emailOrUser = "Email or username"
     override val password = "Password"
     override val rememberMe = "Remember me"
     override val forgot = "Forgot?"
     override val enterCosmere = "Enter the Cosmere"
-    override val orHopVia = "OR HOP VIA"
-    override val newTraveler = "New traveler? "
-    override val beginJourney = "Begin journey"
-
-    // Register
+    override val orHopVia = "or hop via"
+    override val newTraveler = "New traveler?"
+    override val beginJourney = "Begin your journey"
     override val back = "Back"
     override val beginYour = "Begin your"
-    override val journey = "journey"
-    override val nameEtched = "Your name will be etched in the chronicle"
+    override val journey = "journey."
+    override val nameEtched = "A name will be etched upon the roll of travelers."
     override val travelerName = "Traveler name"
     override val email = "Email"
     override val confirmPw = "Confirm password"
-    override val spoilerWarn = "Coppervault contains community discussion that may include spoilers. You can adjust your ceiling at any time in Settings."
-    override val acceptCompact = "I accept the "
-    override val compact = "Compact"
-
-    // Forgot
+    override val spoilerWarn = "This realm contains spoilers across the Cosmere. Forum posts require spoiler tags per saga."
+    override val acceptCompact = "I accept the"
+    override val compact = "Compact of Travelers"
     override val lost = "Lost"
-    override val betweenWorlds = "between worlds"
-    override val forgotBody = "Drop your email and we\u2019ll send you a thread back."
-    override val sendMissive = "Send Missive"
-    override val journeyBefore = "The journey before the destination."
+    override val betweenWorlds = "between worlds?"
+    override val forgotBody = "Tell us the path you entered by. A message will be sent \u2014 a way back."
+    override val sendMissive = "Send the Missive"
+    override val journeyBefore = "Journey before destination."
 
-    // Validation
+    override val todaysPage = "Today\u2019s Page"
+    override val rhythmOf = "The Rhythm of"
+    override val lostLight = "Lost Light"
+    override val rhythmBody = "A reflection on Investiture transfer between Shards, drawn from the Coppermind archives."
+    override val minRead = "MIN READ"
+    override val continueL = "Continue"
+    override val seeAll = "See all"
+    override val fromForum = "From the Forum"
+    override val replies = "REPLIES"
+
+    override val tHome = "Home"
+    override val tWorlds = "Worlds"
+    override val tLibrary = "Library"
+    override val tForum = "Forum"
+    override val tMe = "Me"
+
     override val required = "Required"
     override val invalidEmail = "Invalid email"
     override val nameLenRule = "3-20 chars, letters/numbers/_"
     override val pwMinLength = "At least 8 characters"
     override val pwNeedsNumber = "Must contain a number"
-    override val pwNoMatch = "Passwords don't match"
+    override val pwNoMatch = "Passwords don\u2019t match"
 }
 
-// ── Spanish ────────────────────────────────────��────────
+// ── Spanish (from i18n.jsx es) ──────────────────────────
 
 object EsStrings : Strings {
-    // Splash
-    override val tagline = "Una gu\u00EDa del Cosmere"
-    override val splashQuote = "El paso m\u00E1s importante que puede dar un hombre es el siguiente."
-    override val splashAttr = "Dalinar Kholin"
+    override val tagline = "Compa\u00F1ero del Cosmere"
+    override val splashQuote = "Camino entre mundos, como es mi costumbre."
+    override val splashAttr = "Del diario de un viajero"
 
-    // Login
-    override val openPortal = "ABRE EL PORTAL"
-    override val emailOrUser = "Email o usuario"
+    override val openPortal = "Abrir el Portal"
+    override val emailOrUser = "Correo o usuario"
     override val password = "Contrase\u00F1a"
-    override val rememberMe = "Recordarme"
+    override val rememberMe = "Recu\u00E9rdame"
     override val forgot = "\u00BFOlvidaste?"
     override val enterCosmere = "Entrar al Cosmere"
-    override val orHopVia = "O SALTA V\u00CDA"
-    override val newTraveler = "\u00BFNuevo viajero? "
-    override val beginJourney = "Comienza el viaje"
-
-    // Register
+    override val orHopVia = "o salta con"
+    override val newTraveler = "\u00BFNuevo viajero?"
+    override val beginJourney = "Comienza tu traves\u00EDa"
     override val back = "Volver"
     override val beginYour = "Comienza tu"
-    override val journey = "viaje"
-    override val nameEtched = "Tu nombre ser\u00E1 grabado en la cr\u00F3nica"
+    override val journey = "traves\u00EDa."
+    override val nameEtched = "Tu nombre ser\u00E1 grabado en el registro de los viajeros."
     override val travelerName = "Nombre de viajero"
-    override val email = "Email"
+    override val email = "Correo"
     override val confirmPw = "Confirmar contrase\u00F1a"
-    override val spoilerWarn = "Coppervault contiene discusiones de la comunidad que pueden incluir spoilers. Puedes ajustar tu techo en cualquier momento en Ajustes."
-    override val acceptCompact = "Acepto el "
-    override val compact = "Compacto"
-
-    // Forgot
-    override val lost = "Perdido"
-    override val betweenWorlds = "entre mundos"
-    override val forgotBody = "D\u00E9janos tu email y te enviaremos un hilo de vuelta."
-    override val sendMissive = "Enviar Misiva"
+    override val spoilerWarn = "Este reino contiene spoilers de todo el Cosmere. Los hilos del foro requieren etiqueta de spoiler por saga."
+    override val acceptCompact = "Acepto el"
+    override val compact = "Pacto de los Viajeros"
+    override val lost = "\u00BFPerdido"
+    override val betweenWorlds = "entre mundos?"
+    override val forgotBody = "Dinos por qu\u00E9 sendero entraste. Una misiva te ser\u00E1 enviada \u2014 el camino de vuelta."
+    override val sendMissive = "Enviar la Misiva"
     override val journeyBefore = "El viaje antes que el destino."
 
-    // Validation
+    override val todaysPage = "P\u00E1gina de hoy"
+    override val rhythmOf = "El Ritmo de la"
+    override val lostLight = "Luz Perdida"
+    override val rhythmBody = "Una reflexi\u00F3n sobre la transferencia de Investidura entre Esquirlas, extra\u00EDda de los archivos del Coppermind."
+    override val minRead = "MIN DE LECTURA"
+    override val continueL = "Continuar"
+    override val seeAll = "Ver todo"
+    override val fromForum = "Desde el Foro"
+    override val replies = "RESPUESTAS"
+
+    override val tHome = "Inicio"
+    override val tWorlds = "Mundos"
+    override val tLibrary = "Biblioteca"
+    override val tForum = "Foro"
+    override val tMe = "Yo"
+
     override val required = "Obligatorio"
     override val invalidEmail = "Email inv\u00E1lido"
     override val nameLenRule = "3-20 caracteres, letras/n\u00FAmeros/_"
