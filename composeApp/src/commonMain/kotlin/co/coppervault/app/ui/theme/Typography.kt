@@ -74,7 +74,7 @@ fun cvTypography(): CVTypography {
             fontWeight = FontWeight.Normal,
             fontSize = 30.sp,
             letterSpacing = (-0.5).sp,
-            lineHeight = 33.sp,              // 30 × 1.1
+            lineHeight = 33.sp,
         ),
         // Display L: 28 sp / -0.4 / 1.1
         displayL = TextStyle(
@@ -82,7 +82,7 @@ fun cvTypography(): CVTypography {
             fontWeight = FontWeight.Normal,
             fontSize = 28.sp,
             letterSpacing = (-0.4).sp,
-            lineHeight = 30.8.sp,            // 28 × 1.1
+            lineHeight = 30.8.sp,
         ),
         // Display M: 22 sp / -0.3 / 1.25
         displayM = TextStyle(
@@ -90,46 +90,46 @@ fun cvTypography(): CVTypography {
             fontWeight = FontWeight.Normal,
             fontSize = 22.sp,
             letterSpacing = (-0.3).sp,
-            lineHeight = 27.5.sp,            // 22 × 1.25
+            lineHeight = 27.5.sp,
         ),
 
-        // Body: 13 sp / 0 / 1.55
+        // Body: 14 sp / 0 / 1.55  (base 13 × 1.10)
         body = TextStyle(
+            fontFamily = inter,
+            fontWeight = FontWeight.Normal,
+            fontSize = 14.sp,
+            letterSpacing = 0.sp,
+            lineHeight = 21.7.sp,
+        ),
+        // UI L: 13 sp / 0 / 1.4  (base 12 × 1.10)
+        uiL = TextStyle(
             fontFamily = inter,
             fontWeight = FontWeight.Normal,
             fontSize = 13.sp,
             letterSpacing = 0.sp,
-            lineHeight = 20.15.sp,           // 13 × 1.55
+            lineHeight = 18.2.sp,
         ),
-        // UI L: 12 sp / 0 / 1.4
-        uiL = TextStyle(
-            fontFamily = inter,
-            fontWeight = FontWeight.Normal,
-            fontSize = 12.sp,
-            letterSpacing = 0.sp,
-            lineHeight = 16.8.sp,            // 12 × 1.4
-        ),
-        // UI S: 11 sp / 0.2 / 1.4
+        // UI S: 12 sp / 0.2 / 1.4  (base 11 × 1.10)
         uiS = TextStyle(
             fontFamily = inter,
             fontWeight = FontWeight.Normal,
-            fontSize = 11.sp,
+            fontSize = 12.sp,
             letterSpacing = 0.2.sp,
-            lineHeight = 15.4.sp,            // 11 × 1.4
+            lineHeight = 16.8.sp,
         ),
 
-        // Kicker: 10 sp / letter-spacing 2 / uppercase (applied by caller)
+        // Kicker: 11 sp / letter-spacing 2 / uppercase  (base 10 × 1.10)
         kicker = TextStyle(
             fontFamily = mono,
             fontWeight = FontWeight.Normal,
-            fontSize = 10.sp,
+            fontSize = 11.sp,
             letterSpacing = 2.sp,
         ),
-        // Mono meta: 9 sp / 0.5–1 / often uppercase (applied by caller)
+        // Mono meta: 10 sp / 0.5–1 / often uppercase  (base 9 × 1.10)
         monoMeta = TextStyle(
             fontFamily = mono,
             fontWeight = FontWeight.Normal,
-            fontSize = 9.sp,
+            fontSize = 10.sp,
             letterSpacing = 0.5.sp,
         ),
     )
