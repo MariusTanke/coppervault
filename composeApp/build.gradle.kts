@@ -39,6 +39,7 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.multiplatform.settings)
             implementation(libs.voyager.navigator)
             implementation(libs.voyager.tab)
             implementation(libs.voyager.transitions)

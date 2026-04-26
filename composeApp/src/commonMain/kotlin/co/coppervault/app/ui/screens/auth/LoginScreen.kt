@@ -178,8 +178,7 @@ class LoginScreen : Screen {
                         loading = true
                         scope.launch {
                             delay(800)
-                            FakeAuth.isLoggedIn = true
-                            FakeAuth.email = email
+                            FakeAuth.login(email, rememberMe)
                             navigator.replaceAll(MainScaffold())
                         }
                     }

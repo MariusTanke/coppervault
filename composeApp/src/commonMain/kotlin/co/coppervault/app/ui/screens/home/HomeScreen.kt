@@ -110,7 +110,7 @@ class HomeScreen : Screen {
                         verticalAlignment = Alignment.Bottom,
                     ) {
                         CVKicker(t.continueL, color = Linen)
-                        CVKicker(t.seeAll, color = Ash, size = 9)
+                        CVKicker(t.seeAll, color = Ash, size = 10)
                     }
                 }
 
@@ -192,7 +192,7 @@ private fun HomeTopBar() {
 
 @Composable
 private fun TodaysPageCard(t: co.coppervault.app.ui.strings.Strings) {
-    val rosharAccent = Worlds["roshar"]!!.accent
+    val rosharAccent = Worlds.byKey["roshar"]!!.accent
 
     Box(
         modifier = Modifier
@@ -228,7 +228,7 @@ private fun TodaysPageCard(t: co.coppervault.app.ui.strings.Strings) {
             CVKicker(
                 text = t.todaysPage,
                 color = Aurum,
-                size = 9,
+                size = 10,
             )
 
             Spacer(Modifier.height(10.dp))
@@ -255,8 +255,8 @@ private fun TodaysPageCard(t: co.coppervault.app.ui.strings.Strings) {
             Text(
                 text = t.rhythmBody,
                 style = CVTheme.typography.uiS.copy(
-                    fontSize = 12.sp,
-                    lineHeight = 18.sp,
+                    fontSize = 13.sp,
+                    lineHeight = 19.5.sp,
                 ),
                 color = Fog,
             )
@@ -271,7 +271,7 @@ private fun TodaysPageCard(t: co.coppervault.app.ui.strings.Strings) {
                 Text(
                     text = "\u00B7 6 ${t.minRead}",
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 9.sp,
+                        fontSize = 10.sp,
                         letterSpacing = 1.sp,
                     ),
                     color = Ash,
@@ -297,7 +297,7 @@ private fun ContinueReadingRow() {
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         items(readingMocks) { book ->
-            val world = Worlds[book.world]
+            val world = Worlds.byKey[book.world]
             val accent = world?.accent ?: Aurum
 
             Column(modifier = Modifier.width(120.dp)) {
@@ -313,8 +313,8 @@ private fun ContinueReadingRow() {
                 Text(
                     text = book.title,
                     style = CVTheme.typography.displayM.copy(
-                        fontSize = 13.sp,
-                        lineHeight = 15.6.sp,
+                        fontSize = 15.sp,
+                        lineHeight = 18.sp,
                     ),
                     color = Parchment,
                 )
@@ -341,7 +341,7 @@ private fun ContinueReadingRow() {
                 Text(
                     text = "${book.percent}% \u00B7 ${world?.name ?: book.world}",
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 9.sp,
+                        fontSize = 10.sp,
                         letterSpacing = 0.5.sp,
                     ),
                     color = Ash,
@@ -405,22 +405,22 @@ private fun ForumThreads(t: co.coppervault.app.ui.strings.Strings) {
                             ),
                             color = accent,
                         )
-                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp), color = Ash)
+                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp), color = Ash)
                         Text(
                             text = thread.author,
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp, letterSpacing = 0.5.sp),
+                            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 0.5.sp),
                             color = Ash,
                         )
-                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp), color = Ash)
+                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp), color = Ash)
                         Text(
                             text = thread.time,
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp, letterSpacing = 0.5.sp),
+                            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 0.5.sp),
                             color = Ash,
                         )
                         Spacer(Modifier.weight(1f))
                         Text(
                             text = "${thread.replies} ${t.replies}",
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp, letterSpacing = 0.5.sp),
+                            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 0.5.sp),
                             color = Ash,
                         )
                     }

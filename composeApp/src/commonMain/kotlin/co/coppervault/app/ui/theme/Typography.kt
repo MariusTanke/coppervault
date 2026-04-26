@@ -125,11 +125,11 @@ fun cvTypography(): CVTypography {
             fontSize = 11.sp,
             letterSpacing = 2.sp,
         ),
-        // Mono meta: 10 sp / 0.5–1 / often uppercase  (base 9 × 1.10)
+        // Mono meta: 11 sp / 0.5–1 / often uppercase
         monoMeta = TextStyle(
             fontFamily = mono,
             fontWeight = FontWeight.Normal,
-            fontSize = 10.sp,
+            fontSize = 11.sp,
             letterSpacing = 0.5.sp,
         ),
     )

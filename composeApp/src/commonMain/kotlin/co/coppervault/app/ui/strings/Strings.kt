@@ -3,6 +3,7 @@ package co.coppervault.app.ui.strings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
+import co.coppervault.app.data.WorldDetailsCopy
 
 /**
  * All user-facing strings in Coppervault.
@@ -51,6 +52,20 @@ interface Strings {
     val seeAll: String
     val fromForum: String
     val replies: String
+
+    // ── Worlds ──────────────────────────────────────────
+    val atlas: String
+    val theCosmere: String
+    val cosmereItalic: String
+    val atlasSub: String
+    val allWorlds: String
+    val tapToExplore: String
+    val tapWorldOrSwipe: String
+    val worldSagaName: Map<String, String>
+    val worldDetails: Map<String, WorldDetailsCopy>
+    val shardsLabel: String
+    val magicLabel: String
+    val booksLabel: String
 
     // ── Tabs ────────────────────────────────────────────
     val tHome: String
@@ -110,6 +125,37 @@ object EnStrings : Strings {
     override val fromForum = "From the Forum"
     override val replies = "REPLIES"
 
+    override val atlas = "Atlas"
+    override val theCosmere = "The"
+    override val cosmereItalic = "Cosmere"
+    override val atlasSub = "Eight worlds. Sixteen Shards. One thread."
+    override val allWorlds = "All Worlds"
+    override val tapToExplore = "Tap a world to explore"
+    override val tapWorldOrSwipe = "TAP A WORLD OR SWIPE"
+    override val worldSagaName = mapOf(
+        "roshar" to "STORMLIGHT",
+        "scadrial" to "MISTBORN",
+        "nalthis" to "WARBREAKER",
+        "sel" to "ELANTRIS",
+        "taldain" to "WHITE SAND",
+        "threnody" to "SHADOWS",
+        "first" to "SIXTH OF DUSK",
+        "yolen" to "DRAGONSTEEL",
+    )
+    override val worldDetails = mapOf(
+        "roshar" to WorldDetailsCopy("Honor \u00B7 Cultivation \u00B7 Odium", "Surgebinding", 5),
+        "scadrial" to WorldDetailsCopy("Preservation \u00B7 Ruin (Harmony)", "Allomancy \u00B7 Feruchemy", 7),
+        "nalthis" to WorldDetailsCopy("Endowment", "BioChromatic Breath", 1),
+        "sel" to WorldDetailsCopy("Devotion \u00B7 Dominion", "AonDor \u00B7 ChayShan", 1),
+        "taldain" to WorldDetailsCopy("Autonomy", "Sand Mastery", 1),
+        "threnody" to WorldDetailsCopy("\u2014", "Cognitive Shadows", 1),
+        "first" to WorldDetailsCopy("Patji / Autonomy", "Aviar bonds", 1),
+        "yolen" to WorldDetailsCopy("Adonalsium (shattered)", "Unknown", 0),
+    )
+    override val shardsLabel = "SHARDS"
+    override val magicLabel = "MAGIC"
+    override val booksLabel = "BOOKS"
+
     override val tHome = "Home"
     override val tWorlds = "Worlds"
     override val tLibrary = "Library"
@@ -165,6 +211,37 @@ object EsStrings : Strings {
     override val seeAll = "Ver todo"
     override val fromForum = "Desde el Foro"
     override val replies = "RESPUESTAS"
+
+    override val atlas = "Atlas"
+    override val theCosmere = "El"
+    override val cosmereItalic = "Cosmere"
+    override val atlasSub = "Ocho mundos. Diecis\u00E9is Esquirlas. Un solo hilo."
+    override val allWorlds = "Todos los mundos"
+    override val tapToExplore = "Pulsa un mundo para explorarlo"
+    override val tapWorldOrSwipe = "TOCA UN MUNDO O DESLIZA"
+    override val worldSagaName = mapOf(
+        "roshar" to "EL ARCHIVO DE LAS TORMENTAS",
+        "scadrial" to "NACIDOS DE LA BRUMA",
+        "nalthis" to "EL ALIENTO DE LOS DIOSES",
+        "sel" to "ELANTRIS",
+        "taldain" to "ARENA BLANCA",
+        "threnody" to "TRENODIA",
+        "first" to "EL SEXTO DEL OCASO",
+        "yolen" to "DRAGONSTEEL",
+    )
+    override val worldDetails = mapOf(
+        "roshar" to WorldDetailsCopy("Honor \u00B7 Cultivaci\u00F3n \u00B7 Odium", "Potenciaci\u00F3n", 5),
+        "scadrial" to WorldDetailsCopy("Conservaci\u00F3n \u00B7 Ruina (Armon\u00EDa)", "Alomancia \u00B7 Feruquimia", 7),
+        "nalthis" to WorldDetailsCopy("Dotaci\u00F3n", "Aliento Biocrom\u00E1tico", 1),
+        "sel" to WorldDetailsCopy("Devoci\u00F3n \u00B7 Dominio", "AonDor \u00B7 ChayShan", 1),
+        "taldain" to WorldDetailsCopy("Autonom\u00EDa", "Dominio de la Arena", 1),
+        "threnody" to WorldDetailsCopy("\u2014", "Sombras Cognitivas", 1),
+        "first" to WorldDetailsCopy("Patji / Autonom\u00EDa", "V\u00EDnculos Aviar", 1),
+        "yolen" to WorldDetailsCopy("Adonalsium (fragmentado)", "Desconocido", 0),
+    )
+    override val shardsLabel = "ESQUIRLAS"
+    override val magicLabel = "MAGIA"
+    override val booksLabel = "LIBROS"
 
     override val tHome = "Inicio"
     override val tWorlds = "Mundos"

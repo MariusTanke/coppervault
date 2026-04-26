@@ -16,23 +16,34 @@ object WorldAccents {
 data class WorldMeta(
     val key: String,
     val name: String,
+    val railLabel: String,
     val accent: Color,
 )
 
-val Worlds: Map<String, WorldMeta> = mapOf(
-    "roshar"   to WorldMeta("roshar",   "Roshar",          WorldAccents.roshar),
-    "scadrial" to WorldMeta("scadrial", "Scadrial",        WorldAccents.scadrial),
-    "nalthis"  to WorldMeta("nalthis",  "Nalthis",         WorldAccents.nalthis),
-    "sel"      to WorldMeta("sel",      "Sel",             WorldAccents.sel),
-    "taldain"  to WorldMeta("taldain",  "Taldain",         WorldAccents.taldain),
-    "threnody" to WorldMeta("threnody", "Threnody",        WorldAccents.threnody),
-    "first"    to WorldMeta("first",    "First of the Sun", WorldAccents.first),
-    "yolen"    to WorldMeta("yolen",    "Yolen",           WorldAccents.yolen),
+data class WorldDetailsCopy(
+    val shards: String,
+    val magic: String,
+    val books: Int,
 )
+
+object Worlds {
+    val all: List<WorldMeta> = listOf(
+        WorldMeta("roshar",   "Roshar",           "ROSHAR",           WorldAccents.roshar),
+        WorldMeta("scadrial", "Scadrial",         "SCADRIAL",         WorldAccents.scadrial),
+        WorldMeta("nalthis",  "Nalthis",          "NALTHIS",          WorldAccents.nalthis),
+        WorldMeta("sel",      "Sel",              "SEL",              WorldAccents.sel),
+        WorldMeta("taldain",  "Taldain",          "TALDAIN",          WorldAccents.taldain),
+        WorldMeta("threnody", "Threnody",         "THRENODY",         WorldAccents.threnody),
+        WorldMeta("first",    "First of the Sun", "FIRST OF THE SUN", WorldAccents.first),
+        WorldMeta("yolen",    "Yolen",            "YOLEN",            WorldAccents.yolen),
+    )
+
+    val byKey: Map<String, WorldMeta> = all.associateBy { it.key }
+}
 
 /** Resolve accent color for a world name. "Cosmere" maps to Aurum. */
 fun worldAccentByName(name: String): Color {
-    if (name.equals("Cosmere", ignoreCase = true)) return Color(0xFFC9A66B) // Aurum
-    return Worlds.values.firstOrNull { it.name.equals(name, ignoreCase = true) }?.accent
-        ?: Color(0xFFC9A66B) // Aurum fallback
+    if (name.equals("Cosmere", ignoreCase = true)) return Color(0xFFC9A66B)
+    return Worlds.all.firstOrNull { it.name.equals(name, ignoreCase = true) }?.accent
+        ?: Color(0xFFC9A66B)
 }
