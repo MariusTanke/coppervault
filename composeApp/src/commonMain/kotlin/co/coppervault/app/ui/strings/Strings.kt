@@ -79,6 +79,60 @@ interface Strings {
     val emptyLibrary: String
     val emptyLibrarySub: String
 
+    // ── Forum ───────────────────────────────────────────
+    val gathering: String
+    val forum: String
+    val filters: List<String>
+    val repliesL: String
+    val replyHint: String
+
+    // ── Me / Profile ────────────────────────────────────
+    val me: String
+    val booksReadStat: String
+    val worldsVisited: String
+    val threads: String
+    val worldProgress: String
+    val sealsEarned: String
+    val seals: List<String>
+    val quoteHoid: String
+    val arrangements: String
+    val settings: String
+    val account: String
+    val profileLabel: String
+    val spoilersLabel: String
+    val spoilerLevel: String
+    val hideByDefault: String
+    val markRead: String
+    val appearance: String
+    val theme: String
+    val themeAbyssal: String
+    val worldAccents: String
+    val epigraphs: String
+    val aboutLabel: String
+    val privacy: String
+    val version: String
+    val logOut: String
+
+    // ── Notifications ───────────────────────────────────
+    val notifications: String
+    val markAllRead: String
+    val allTab: String
+    val mentionsTab: String
+    val repliesTab: String
+    val notifEmpty: String
+    val notifEmptySub: String
+
+    // ── Search ──────────────────────────────────────────
+    val searchP: String
+    val cancel: String
+    val recent: String
+    val results: String
+    val nothingFound: String
+    val nothingFoundSub: String
+
+    // ── Article ─────────────────────────────────────────
+    val spoilers: String
+
     // ── Tabs ────────────────────────────────────────────
     val tHome: String
     val tWorlds: String
@@ -179,6 +233,55 @@ object EnStrings : Strings {
     override val emptyLibrary = "Nothing here yet"
     override val emptyLibrarySub = "Add books to your library."
 
+    override val gathering = "The Gathering"
+    override val forum = "Forum"
+    override val filters = listOf("All", "Theories", "Discussion", "Art", "Lore", "Re-read")
+    override val repliesL = "replies"
+    override val replyHint = "Reply to this thread\u2026"
+
+    override val me = "Me"
+    override val booksReadStat = "Books read"
+    override val worldsVisited = "Worlds visited"
+    override val threads = "Threads"
+    override val worldProgress = "World progress"
+    override val sealsEarned = "Seals earned"
+    override val seals = listOf("First Oath", "Worldhopper", "Theorist", "Re-reader", "Archivist")
+    override val quoteHoid = "\u201CI am, of course, a storyteller.\u201D"
+    override val arrangements = "Arrangements"
+    override val settings = "Settings"
+    override val account = "Account"
+    override val profileLabel = "Profile"
+    override val spoilersLabel = "Spoilers"
+    override val spoilerLevel = "Spoiler level"
+    override val hideByDefault = "Hide by default"
+    override val markRead = "Mark books read"
+    override val appearance = "Appearance"
+    override val theme = "Theme"
+    override val themeAbyssal = "Abyssal"
+    override val worldAccents = "World accents"
+    override val epigraphs = "Epigraphs"
+    override val aboutLabel = "About"
+    override val privacy = "Privacy"
+    override val version = "Version"
+    override val logOut = "Log out"
+
+    override val notifications = "Notifications"
+    override val markAllRead = "Mark all read"
+    override val allTab = "All"
+    override val mentionsTab = "Mentions"
+    override val repliesTab = "Replies"
+    override val notifEmpty = "Nothing here yet"
+    override val notifEmptySub = "Notifications will appear here."
+
+    override val searchP = "Search the Cosmere\u2026"
+    override val cancel = "Cancel"
+    override val recent = "Recent"
+    override val results = "results"
+    override val nothingFound = "Nothing found"
+    override val nothingFoundSub = "Try a different search."
+
+    override val spoilers = "Spoilers"
+
     override val tHome = "Home"
     override val tWorlds = "Worlds"
     override val tLibrary = "Library"
@@ -276,6 +379,55 @@ object EsStrings : Strings {
     override val unreadMark = "\u2014 Sin leer"
     override val emptyLibrary = "A\u00FAn nada aqu\u00ED"
     override val emptyLibrarySub = "A\u00F1ade libros a tu biblioteca."
+
+    override val gathering = "La Reuni\u00F3n"
+    override val forum = "Foro"
+    override val filters = listOf("Todo", "Teor\u00EDas", "Debate", "Arte", "Lore", "Relectura")
+    override val repliesL = "respuestas"
+    override val replyHint = "Responder al hilo\u2026"
+
+    override val me = "Yo"
+    override val booksReadStat = "Libros le\u00EDdos"
+    override val worldsVisited = "Mundos visitados"
+    override val threads = "Hilos"
+    override val worldProgress = "Progreso por mundo"
+    override val sealsEarned = "Sellos obtenidos"
+    override val seals = listOf("Primer Juramento", "Worldhopper", "Te\u00F3rico", "Relector", "Archivista")
+    override val quoteHoid = "\u201CSoy, por supuesto, un narrador.\u201D"
+    override val arrangements = "Arreglos"
+    override val settings = "Ajustes"
+    override val account = "Cuenta"
+    override val profileLabel = "Perfil"
+    override val spoilersLabel = "Spoilers"
+    override val spoilerLevel = "Nivel de spoiler"
+    override val hideByDefault = "Ocultar por defecto"
+    override val markRead = "Marcar libros le\u00EDdos"
+    override val appearance = "Apariencia"
+    override val theme = "Tema"
+    override val themeAbyssal = "Abismal"
+    override val worldAccents = "Acentos por mundo"
+    override val epigraphs = "Ep\u00EDgrafes"
+    override val aboutLabel = "Acerca de"
+    override val privacy = "Privacidad"
+    override val version = "Versi\u00F3n"
+    override val logOut = "Cerrar sesi\u00F3n"
+
+    override val notifications = "Notificaciones"
+    override val markAllRead = "Marcar todo le\u00EDdo"
+    override val allTab = "Todo"
+    override val mentionsTab = "Menciones"
+    override val repliesTab = "Respuestas"
+    override val notifEmpty = "A\u00FAn nada aqu\u00ED"
+    override val notifEmptySub = "Las notificaciones aparecer\u00E1n aqu\u00ED."
+
+    override val searchP = "Buscar en el Cosmere\u2026"
+    override val cancel = "Cancelar"
+    override val recent = "Reciente"
+    override val results = "resultados"
+    override val nothingFound = "Nada encontrado"
+    override val nothingFoundSub = "Prueba con otra b\u00FAsqueda."
+
+    override val spoilers = "Spoilers"
 
     override val tHome = "Inicio"
     override val tWorlds = "Mundos"
