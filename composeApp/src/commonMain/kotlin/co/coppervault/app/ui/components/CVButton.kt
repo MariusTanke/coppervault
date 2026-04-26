@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import co.coppervault.app.ui.theme.Abyss
 import co.coppervault.app.ui.theme.Ash
 import co.coppervault.app.ui.theme.Aurum
 import co.coppervault.app.ui.theme.AurumHi
@@ -71,7 +72,7 @@ fun CVButton(
     when (variant) {
         CVButtonVariant.Primary -> {
             background = Brush.verticalGradient(listOf(AurumHi, Aurum, AurumLo))
-            contentColor = Void
+            contentColor = Abyss
             border = null
         }
         CVButtonVariant.Ghost -> {

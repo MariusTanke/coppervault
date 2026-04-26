@@ -44,7 +44,7 @@ private data class StarSpec(
 fun CVMistBg(
     modifier: Modifier = Modifier,
     starCount: Int = 50,
-    seed: Long = 42L,
+    seed: Long = 1234L,
     intensity: Float = 1f,
     content: @Composable BoxScope.() -> Unit = {},
 ) {
