@@ -5,5 +5,8 @@ package co.coppervault.app.navigation
  * Will be replaced by a real AuthRepository in a later pass.
  */
 object FakeAuth {
-    var isLoggedIn = false
+    var isLoggedIn: Boolean = false
+    var displayName: String = ""
+    var email: String = ""
+    var spoilerCeiling: String = "EVERYTHING"
 }
