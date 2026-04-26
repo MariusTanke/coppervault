@@ -41,6 +41,7 @@ import co.coppervault.app.data.Worlds
 import co.coppervault.app.data.worldAccentByName
 import co.coppervault.app.ui.components.CVChip
 import co.coppervault.app.ui.components.CVCosmereMark
+import co.coppervault.app.ui.components.CVDivider
 import co.coppervault.app.ui.components.CVIcons
 import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.CVPlaceholder
@@ -135,56 +136,52 @@ class HomeScreen : Screen {
 
 @Composable
 private fun HomeTopBar() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .drawBehind {
-                drawRect(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            Color(0xFFC9A66B).copy(alpha = 0.04f),
-                            Color.Transparent,
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .drawBehind {
+                    drawRect(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color(0xFFC9A66B).copy(alpha = 0.04f),
+                                Color.Transparent,
+                            ),
                         ),
-                    ),
-                )
-                // Bottom border
-                drawLine(
-                    color = Stone,
-                    start = Offset(0f, size.height),
-                    end = Offset(size.width, size.height),
-                    strokeWidth = 0.5f,
-                )
-            }
-            .padding(top = 54.dp, bottom = 14.dp, start = 20.dp, end = 20.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        // Left: CosmereMark + Wordmark
-        Row(
+                    )
+                }
+                .padding(top = 54.dp, bottom = 14.dp, start = 20.dp, end = 20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            CVCosmereMark(size = 22.dp, strokeWidth = 0.6f)
-            CVWordmark(size = 17, tight = true)
-        }
+            // Left: CosmereMark + Wordmark
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                CVCosmereMark(size = 22.dp, strokeWidth = 0.6f)
+                CVWordmark(size = 17, tight = true)
+            }
 
-        // Right: search + bell with notification dot
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(CVIcons.Search, contentDescription = "Search", tint = Fog, modifier = Modifier.size(18.dp))
-            Box {
-                Icon(CVIcons.Bell, contentDescription = "Notifications", tint = Fog, modifier = Modifier.size(18.dp))
-                Box(
-                    modifier = Modifier
-                        .size(6.dp)
-                        .background(Aurum, CircleShape)
-                        .align(Alignment.TopEnd)
-                        .offset(x = 1.dp, y = (-1).dp),
-                )
+            // Right: search + bell with notification dot
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(CVIcons.Search, contentDescription = "Search", tint = Fog, modifier = Modifier.size(18.dp))
+                Box {
+                    Icon(CVIcons.Bell, contentDescription = "Notifications", tint = Fog, modifier = Modifier.size(18.dp))
+                    Box(
+                        modifier = Modifier
+                            .size(6.dp)
+                            .background(Aurum, CircleShape)
+                            .align(Alignment.TopEnd)
+                            .offset(x = 1.dp, y = (-1).dp),
+                    )
+                }
             }
         }
+        CVDivider()
     }
 }
 

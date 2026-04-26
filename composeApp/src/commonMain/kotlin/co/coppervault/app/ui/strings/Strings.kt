@@ -67,6 +67,18 @@ interface Strings {
     val magicLabel: String
     val booksLabel: String
 
+    // ── Library ─────────────────────────────────────────
+    val theArchive: String
+    val library: String
+    val reading: String
+    val toRead: String
+    val finished: String
+    val all: String
+    val finishedMark: String
+    val unreadMark: String
+    val emptyLibrary: String
+    val emptyLibrarySub: String
+
     // ── Tabs ────────────────────────────────────────────
     val tHome: String
     val tWorlds: String
@@ -156,6 +168,17 @@ object EnStrings : Strings {
     override val magicLabel = "MAGIC"
     override val booksLabel = "BOOKS"
 
+    override val theArchive = "The Archive"
+    override val library = "Library"
+    override val reading = "Reading"
+    override val toRead = "To Read"
+    override val finished = "Finished"
+    override val all = "All"
+    override val finishedMark = "\u2713 Finished"
+    override val unreadMark = "\u2014 Unread"
+    override val emptyLibrary = "Nothing here yet"
+    override val emptyLibrarySub = "Add books to your library."
+
     override val tHome = "Home"
     override val tWorlds = "Worlds"
     override val tLibrary = "Library"
@@ -242,6 +265,17 @@ object EsStrings : Strings {
     override val shardsLabel = "ESQUIRLAS"
     override val magicLabel = "MAGIA"
     override val booksLabel = "LIBROS"
+
+    override val theArchive = "El Archivo"
+    override val library = "Biblioteca"
+    override val reading = "Leyendo"
+    override val toRead = "Por leer"
+    override val finished = "Terminados"
+    override val all = "Todo"
+    override val finishedMark = "\u2713 Terminado"
+    override val unreadMark = "\u2014 Sin leer"
+    override val emptyLibrary = "A\u00FAn nada aqu\u00ED"
+    override val emptyLibrarySub = "A\u00F1ade libros a tu biblioteca."
 
     override val tHome = "Inicio"
     override val tWorlds = "Mundos"

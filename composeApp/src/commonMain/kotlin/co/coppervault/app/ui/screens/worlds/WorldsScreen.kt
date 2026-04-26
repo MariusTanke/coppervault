@@ -45,6 +45,7 @@ import co.coppervault.app.data.Worlds
 import co.coppervault.app.ui.components.CVButton
 import co.coppervault.app.ui.components.CVButtonSize
 import co.coppervault.app.ui.components.CVButtonVariant
+import co.coppervault.app.ui.components.CVDivider
 import co.coppervault.app.ui.components.CVIcons
 import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.PlanetCoverflow
@@ -118,42 +119,37 @@ class WorldsScreen : Screen {
 
 @Composable
 private fun WorldsHeader(t: Strings) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .drawBehind {
-                drawLine(
-                    color = Stone,
-                    start = Offset(0f, size.height),
-                    end = Offset(size.width, size.height),
-                    strokeWidth = 0.5f,
-                )
-            }
-            .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 14.dp),
-    ) {
-        CVKicker(t.atlas, color = Ash, size = 10)
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = buildAnnotatedString {
-                withStyle(SpanStyle(color = Parchment)) {
-                    append("${t.theCosmere} ")
-                }
-                withStyle(SpanStyle(color = Aurum, fontStyle = FontStyle.Italic)) {
-                    append(t.cosmereItalic)
-                }
-            },
-            style = CVTheme.typography.displayXL.copy(
-                fontSize = 28.sp,
-                letterSpacing = (-0.4).sp,
-                fontWeight = FontWeight.Normal,
-            ),
-        )
-        Spacer(Modifier.height(2.dp))
-        Text(
-            text = t.atlasSub,
-            style = CVTheme.typography.uiS.copy(fontSize = 13.sp),
-            color = Fog,
-        )
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 14.dp),
+        ) {
+            CVKicker(t.atlas, color = Ash, size = 10)
+            Spacer(Modifier.height(4.dp))
+            Text(
+                text = buildAnnotatedString {
+                    withStyle(SpanStyle(color = Parchment)) {
+                        append("${t.theCosmere} ")
+                    }
+                    withStyle(SpanStyle(color = Aurum, fontStyle = FontStyle.Italic)) {
+                        append(t.cosmereItalic)
+                    }
+                },
+                style = CVTheme.typography.displayXL.copy(
+                    fontSize = 28.sp,
+                    letterSpacing = (-0.4).sp,
+                    fontWeight = FontWeight.Normal,
+                ),
+            )
+            Spacer(Modifier.height(2.dp))
+            Text(
+                text = t.atlasSub,
+                style = CVTheme.typography.uiS.copy(fontSize = 13.sp),
+                color = Fog,
+            )
+        }
+        CVDivider()
     }
 }
 
@@ -161,56 +157,53 @@ private fun WorldsHeader(t: Strings) {
 
 @Composable
 private fun WorldDetailPanel(world: WorldMeta, saga: String, details: WorldDetailsCopy?, t: Strings) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .drawBehind {
-                drawRect(
-                    brush = Brush.verticalGradient(
-                        listOf(world.accent.copy(alpha = 0.05f), Color.Transparent),
-                    ),
-                )
-                drawRect(
-                    color = world.accent,
-                    topLeft = Offset.Zero,
-                    size = Size(2.dp.toPx(), size.height),
-                )
-                drawLine(
-                    color = Stone,
-                    start = Offset(0f, size.height),
-                    end = Offset(size.width, size.height),
-                    strokeWidth = 0.5f,
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .drawBehind {
+                    drawRect(
+                        brush = Brush.verticalGradient(
+                            listOf(world.accent.copy(alpha = 0.05f), Color.Transparent),
+                        ),
+                    )
+                    drawRect(
+                        color = world.accent,
+                        topLeft = Offset.Zero,
+                        size = Size(2.dp.toPx(), size.height),
+                    )
+                }
+                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 22.dp),
+        ) {
+            CVKicker(saga, color = world.accent, size = 10)
+            Spacer(Modifier.height(6.dp))
+            Text(
+                text = world.name,
+                style = CVTheme.typography.displayXL.copy(
+                    fontSize = 26.sp,
+                    letterSpacing = (-0.3).sp,
+                    lineHeight = 26.sp,
+                ),
+                color = Parchment,
+            )
+
+            if (details != null) {
+                Spacer(Modifier.height(14.dp))
+                DetailRow(t.shardsLabel, details.shards)
+                Spacer(Modifier.height(8.dp))
+                DetailRow(t.magicLabel, details.magic)
+                Spacer(Modifier.height(8.dp))
+                DetailRow(t.booksLabel, if (details.books > 0) details.books.toString() else "\u2014")
+                Spacer(Modifier.height(16.dp))
+                CVButton(
+                    text = "${world.name} \u2192",
+                    variant = CVButtonVariant.Ghost,
+                    size = CVButtonSize.S,
+                    onClick = {},
                 )
             }
-            .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 22.dp),
-    ) {
-        CVKicker(saga, color = world.accent, size = 10)
-        Spacer(Modifier.height(6.dp))
-        Text(
-            text = world.name,
-            style = CVTheme.typography.displayXL.copy(
-                fontSize = 26.sp,
-                letterSpacing = (-0.3).sp,
-                lineHeight = 26.sp,
-            ),
-            color = Parchment,
-        )
-
-        if (details != null) {
-            Spacer(Modifier.height(14.dp))
-            DetailRow(t.shardsLabel, details.shards)
-            Spacer(Modifier.height(8.dp))
-            DetailRow(t.magicLabel, details.magic)
-            Spacer(Modifier.height(8.dp))
-            DetailRow(t.booksLabel, if (details.books > 0) details.books.toString() else "\u2014")
-            Spacer(Modifier.height(16.dp))
-            CVButton(
-                text = "${world.name} \u2192",
-                variant = CVButtonVariant.Ghost,
-                size = CVButtonSize.S,
-                onClick = {},
-            )
         }
+        CVDivider()
     }
 }
 

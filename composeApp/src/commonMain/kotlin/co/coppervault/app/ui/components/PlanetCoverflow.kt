@@ -50,7 +50,7 @@ import kotlin.math.absoluteValue
 import kotlinx.coroutines.launch
 
 private val RAIL_HEIGHT = 320.dp
-private val CELL_WIDTH = 110.dp
+private val CELL_WIDTH = 90.dp
 private val MIST_WIDTH = 70.dp
 
 private val BG_TOP = Color(0xFF05060A)
