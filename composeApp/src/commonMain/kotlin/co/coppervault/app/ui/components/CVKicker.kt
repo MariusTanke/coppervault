@@ -21,7 +21,7 @@ fun CVKicker(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Ash,
-    size: Int = 10,
+    size: Int = 11,
 ) {
     Text(
         text = text.uppercase(),
@@ -47,8 +47,8 @@ fun CVKickerPreview() {
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             CVKicker("The Archive")
-            CVKicker("Today's Page", color = Aurum, size = 9)
-            CVKicker("Chronology · Cosmic", color = Fog, size = 8)
+            CVKicker("Today's Page", color = Aurum, size = 10)
+            CVKicker("Chronology · Cosmic", color = Fog, size = 9)
         }
     }
 }

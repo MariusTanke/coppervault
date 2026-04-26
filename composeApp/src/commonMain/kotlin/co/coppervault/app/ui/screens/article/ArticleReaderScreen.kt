@@ -33,6 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import co.coppervault.app.data.Article
 import co.coppervault.app.data.ArticleSection
 import co.coppervault.app.data.Articles
@@ -57,6 +59,7 @@ class ArticleReaderScreen(
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val t = CVStrings.current
         val accent = Worlds.byKey[article.worldKey]?.accent ?: Aurum
 
@@ -81,7 +84,7 @@ class ArticleReaderScreen(
                         tint = Fog,
                         modifier = Modifier
                             .size(18.dp)
-                            .clickable { /* TODO(p2): navigate back */ },
+                            .clickable { navigator.pop() },
                     )
                     Icon(
                         CVIcons.More,
@@ -112,7 +115,7 @@ class ArticleReaderScreen(
                     CVKicker(
                         text = article.worldKey.uppercase(),
                         color = accent,
-                        size = 9,
+                        size = 10,
                     )
 
                     Spacer(Modifier.height(12.dp))
@@ -133,9 +136,9 @@ class ArticleReaderScreen(
                     Text(
                         text = article.subtitle,
                         style = CVTheme.typography.body.copy(
-                            fontSize = 14.sp,
+                            fontSize = 15.sp,
                             fontStyle = FontStyle.Italic,
-                            lineHeight = (14 * 1.4).sp,
+                            lineHeight = (15 * 1.4).sp,
                         ),
                         color = Fog,
                     )
@@ -150,20 +153,20 @@ class ArticleReaderScreen(
                         Text(
                             text = article.author.uppercase(),
                             style = CVTheme.typography.monoMeta.copy(
-                                fontSize = 9.sp,
+                                fontSize = 10.sp,
                                 letterSpacing = 1.sp,
                             ),
                             color = Ash,
                         )
                         Text(
                             text = "\u00B7",
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp),
+                            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp),
                             color = Ash,
                         )
                         Text(
                             text = "${article.readMin} ${t.minRead}",
                             style = CVTheme.typography.monoMeta.copy(
-                                fontSize = 9.sp,
+                                fontSize = 10.sp,
                                 letterSpacing = 1.sp,
                             ),
                             color = Ash,
@@ -190,7 +193,7 @@ class ArticleReaderScreen(
                         Text(
                             text = "${t.spoilers}: ${article.spoilerLevel}".uppercase(),
                             style = CVTheme.typography.monoMeta.copy(
-                                fontSize = 9.sp,
+                                fontSize = 10.sp,
                                 letterSpacing = 1.sp,
                             ),
                             color = accent,
@@ -208,8 +211,8 @@ class ArticleReaderScreen(
                         Text(
                             text = section.text,
                             style = CVTheme.typography.body.copy(
-                                fontSize = 15.sp,
-                                lineHeight = (15 * 1.7).sp,
+                                fontSize = 16.5.sp,
+                                lineHeight = (16.5 * 1.7).sp,
                             ),
                             color = Linen,
                             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
@@ -244,7 +247,7 @@ class ArticleReaderScreen(
                 Column(
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
                 ) {
-                    CVKicker("Tags", color = Ash, size = 9)
+                    CVKicker("Tags", color = Ash, size = 11)
                     Spacer(Modifier.height(10.dp))
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -258,7 +261,7 @@ class ArticleReaderScreen(
                             ) {
                                 Text(
                                     text = tag,
-                                    style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
+                                    style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
                                     color = Fog,
                                 )
                             }
@@ -304,7 +307,7 @@ private fun PullQuoteBlock(
         Text(
             text = "\u2014 $attribution",
             style = CVTheme.typography.monoMeta.copy(
-                fontSize = 9.sp,
+                fontSize = 10.sp,
                 letterSpacing = 1.sp,
             ),
             color = Ash,

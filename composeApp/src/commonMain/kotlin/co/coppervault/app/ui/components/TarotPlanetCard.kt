@@ -138,7 +138,7 @@ fun TarotPlanetCard(
             Text(
                 text = sagaName,
                 style = CVTheme.typography.monoMeta.copy(
-                    fontSize = 8.sp,
+                    fontSize = 9.sp,
                     letterSpacing = 1.5.sp,
                     fontWeight = FontWeight.Normal,
                 ),

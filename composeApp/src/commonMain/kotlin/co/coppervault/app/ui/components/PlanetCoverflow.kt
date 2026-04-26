@@ -215,7 +215,7 @@ fun PlanetCoverflow(
                         Text(
                             text = worlds[page].name.uppercase(),
                             style = CVTheme.typography.monoMeta.copy(
-                                fontSize = 9.sp,
+                                fontSize = 10.sp,
                                 letterSpacing = 1.5.sp,
                                 fontWeight = if (abs < 0.5f) FontWeight.SemiBold else FontWeight.Normal,
                             ),
@@ -281,7 +281,7 @@ fun PlanetCoverflow(
         Text(
             text = "\u2190 ${hint} \u2192",
             style = CVTheme.typography.monoMeta.copy(
-                fontSize = 9.sp,
+                fontSize = 10.sp,
                 letterSpacing = 1.5.sp,
             ),
             color = Ash.copy(alpha = 0.6f),

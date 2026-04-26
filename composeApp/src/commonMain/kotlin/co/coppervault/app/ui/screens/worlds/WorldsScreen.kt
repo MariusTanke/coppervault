@@ -125,7 +125,7 @@ private fun WorldsHeader(t: Strings) {
                 .fillMaxWidth()
                 .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 14.dp),
         ) {
-            CVKicker(t.atlas, color = Ash, size = 10)
+            CVKicker(t.atlas, color = Ash, size = 11)
             Spacer(Modifier.height(4.dp))
             Text(
                 text = buildAnnotatedString {
@@ -145,7 +145,7 @@ private fun WorldsHeader(t: Strings) {
             Spacer(Modifier.height(2.dp))
             Text(
                 text = t.atlasSub,
-                style = CVTheme.typography.uiS.copy(fontSize = 13.sp),
+                style = CVTheme.typography.uiS.copy(fontSize = 14.sp),
                 color = Fog,
             )
         }
@@ -175,7 +175,7 @@ private fun WorldDetailPanel(world: WorldMeta, saga: String, details: WorldDetai
                 }
                 .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 22.dp),
         ) {
-            CVKicker(saga, color = world.accent, size = 10)
+            CVKicker(saga, color = world.accent, size = 11)
             Spacer(Modifier.height(6.dp))
             Text(
                 text = world.name,
@@ -215,13 +215,13 @@ private fun DetailRow(label: String, value: String) {
     ) {
         Text(
             text = label,
-            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 1.sp),
+            style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 1.sp),
             color = Ash,
             modifier = Modifier.width(90.dp),
         )
         Text(
             text = value,
-            style = CVTheme.typography.uiS.copy(fontSize = 13.sp),
+            style = CVTheme.typography.uiS.copy(fontSize = 14.sp),
             color = Linen,
         )
     }
@@ -261,7 +261,7 @@ private fun WorldRow(world: WorldMeta, saga: String, isActive: Boolean, onClick:
             Spacer(Modifier.height(2.dp))
             Text(
                 text = saga,
-                style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp, letterSpacing = 1.sp),
+                style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 1.sp),
                 color = Ash,
             )
         }

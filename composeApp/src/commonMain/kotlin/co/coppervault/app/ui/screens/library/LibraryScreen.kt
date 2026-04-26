@@ -30,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
@@ -75,7 +74,7 @@ class LibraryScreen : Screen {
                     .fillMaxWidth()
                     .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 14.dp),
             ) {
-                CVKicker(t.theArchive, color = Ash, size = 10)
+                CVKicker(t.theArchive, color = Ash, size = 11)
                 Spacer(Modifier.height(4.dp))
                 Text(
                     text = t.library,
@@ -116,7 +115,7 @@ class LibraryScreen : Screen {
                         Text(
                             text = label.uppercase(),
                             style = CVTheme.typography.monoMeta.copy(
-                                fontSize = 11.sp,
+                                fontSize = 12.sp,
                                 letterSpacing = 1.5.sp,
                                 fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                             ),
@@ -148,7 +147,7 @@ class LibraryScreen : Screen {
                         Text(
                             text = t.emptyLibrary.uppercase(),
                             style = CVTheme.typography.monoMeta.copy(
-                                fontSize = 10.sp,
+                                fontSize = 11.sp,
                                 letterSpacing = 2.sp,
                             ),
                             color = Ash,
@@ -157,7 +156,7 @@ class LibraryScreen : Screen {
                         Text(
                             text = t.emptyLibrarySub,
                             style = CVTheme.typography.body.copy(
-                                fontSize = 13.sp,
+                                fontSize = 14.sp,
                             ),
                             color = Fog,
                         )
@@ -219,9 +218,8 @@ private fun BookCard(
         Text(
             text = book.orderLabel.uppercase(),
             style = CVTheme.typography.monoMeta.copy(
-                fontSize = 9.sp,
+                fontSize = 10.sp,
                 letterSpacing = 1.sp,
-                textDecoration = TextDecoration.None,
             ),
             color = worldAccent,
         )
@@ -234,7 +232,6 @@ private fun BookCard(
             style = CVTheme.typography.displayM.copy(
                 fontSize = 15.sp,
                 lineHeight = (15 * 1.15).sp,
-                textDecoration = TextDecoration.None,
             ),
             color = Parchment,
         )
@@ -262,7 +259,7 @@ private fun BookCard(
                 Text(
                     text = t.finishedMark.uppercase(),
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 9.sp,
+                        fontSize = 10.sp,
                         letterSpacing = 1.sp,
                     ),
                     color = Ash,
@@ -272,7 +269,7 @@ private fun BookCard(
                 Text(
                     text = t.unreadMark.uppercase(),
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 9.sp,
+                        fontSize = 10.sp,
                         letterSpacing = 1.sp,
                     ),
                     color = Ash,

@@ -53,7 +53,7 @@ class ForgotScreen : Screen {
             ) {
                 Icon(CVIcons.Back, contentDescription = t.back, tint = Ash, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(8.dp))
-                CVKicker(t.back, color = Fog, size = 10)
+                CVKicker(t.back, color = Fog, size = 11)
             }
 
             Spacer(Modifier.height(28.dp))
@@ -83,8 +83,8 @@ class ForgotScreen : Screen {
             Text(
                 text = t.forgotBody,
                 style = CVTheme.typography.uiL.copy(
-                    fontSize = 13.sp,
-                    lineHeight = 20.8.sp,
+                    fontSize = 14.sp,
+                    lineHeight = 22.4.sp,
                 ),
                 color = Fog,
             )

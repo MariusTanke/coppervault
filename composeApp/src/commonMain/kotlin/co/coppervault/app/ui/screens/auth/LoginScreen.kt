@@ -86,7 +86,7 @@ class LoginScreen : Screen {
                 Text(
                     text = t.openPortal,
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 9.sp,
+                        fontSize = 10.sp,
                         letterSpacing = 3.sp,
                         fontWeight = FontWeight.Medium,
                     ),
@@ -152,14 +152,14 @@ class LoginScreen : Screen {
                     Spacer(Modifier.width(8.dp))
                     Text(
                         text = t.rememberMe,
-                        style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
+                        style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
                         color = Fog,
                     )
                 }
 
                 Text(
                     text = t.forgot,
-                    style = CVTheme.typography.uiS.copy(fontSize = 11.sp, letterSpacing = 0.3.sp),
+                    style = CVTheme.typography.uiS.copy(fontSize = 12.sp, letterSpacing = 0.3.sp),
                     color = Aurum,
                     modifier = Modifier.clickable { navigator.push(ForgotScreen()) },
                 )
@@ -194,7 +194,7 @@ class LoginScreen : Screen {
                 Text(
                     text = "  ${t.orHopVia}  ",
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 9.sp,
+                        fontSize = 10.sp,
                         letterSpacing = 2.sp,
                     ),
                     color = Ash,
@@ -220,12 +220,12 @@ class LoginScreen : Screen {
             ) {
                 Text(
                     text = t.newTraveler + " ",
-                    style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
+                    style = CVTheme.typography.uiS.copy(fontSize = 13.sp),
                     color = Fog,
                 )
                 Text(
                     text = t.beginJourney,
-                    style = CVTheme.typography.uiS.copy(fontSize = 12.sp, fontWeight = FontWeight.Bold),
+                    style = CVTheme.typography.uiS.copy(fontSize = 13.sp, fontWeight = FontWeight.Bold),
                     color = Aurum,
                     modifier = Modifier.clickable { navigator.push(RegisterScreen()) },
                 )
@@ -253,13 +253,13 @@ private fun SocialButton(
         ) {
             Text(
                 text = glyph,
-                style = CVTheme.typography.monoMeta.copy(fontSize = 14.sp),
+                style = CVTheme.typography.monoMeta.copy(fontSize = 15.sp),
                 color = Aurum,
             )
             Text(
                 text = label,
                 style = CVTheme.typography.uiS.copy(
-                    fontSize = 12.sp,
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
                 ),
                 color = Linen,

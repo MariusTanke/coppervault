@@ -124,7 +124,7 @@ fun CVTabBar(
                     Text(
                         text = label.uppercase(),
                         style = CVTheme.typography.monoMeta.copy(
-                            fontSize = 9.sp,
+                            fontSize = 10.sp,
                             letterSpacing = 1.sp,
                             fontWeight = if (isActive) FontWeight.SemiBold else FontWeight.Normal,
                         ),

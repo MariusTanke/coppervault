@@ -79,7 +79,7 @@ fun CVPlaceholder(
         Text(
             text = label.uppercase(),
             style = CVTheme.typography.monoMeta.copy(
-                fontSize = 11.sp,
+                fontSize = 12.sp,
                 letterSpacing = 1.sp,
                 fontWeight = FontWeight.Medium,
             ),

@@ -34,6 +34,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import co.coppervault.app.data.Forum
 import co.coppervault.app.data.Library
 import co.coppervault.app.data.Worlds
@@ -59,6 +61,7 @@ class SearchScreen : Screen {
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val t = CVStrings.current
         var query by remember { mutableStateOf("") }
 
@@ -85,16 +88,16 @@ class SearchScreen : Screen {
                 if (query.isNotEmpty()) {
                     Text(
                         text = "\u2715",
-                        style = CVTheme.typography.monoMeta.copy(fontSize = 14.sp),
+                        style = CVTheme.typography.monoMeta.copy(fontSize = 15.sp),
                         color = Ash,
                         modifier = Modifier.clickable { query = "" },
                     )
                 }
                 Text(
                     text = t.cancel,
-                    style = CVTheme.typography.uiS.copy(fontSize = 11.sp, letterSpacing = 0.5.sp),
+                    style = CVTheme.typography.uiS.copy(fontSize = 12.sp, letterSpacing = 0.5.sp),
                     color = Aurum,
-                    modifier = Modifier.clickable { /* TODO(p2): navigate back */ },
+                    modifier = Modifier.clickable { navigator.pop() },
                 )
             }
             CVDivider()
@@ -125,7 +128,7 @@ class SearchScreen : Screen {
                                 ) {
                                     Text(
                                         text = term,
-                                        style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
+                                        style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
                                         color = Linen,
                                     )
                                 }
@@ -149,11 +152,11 @@ class SearchScreen : Screen {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
                                 text = t.nothingFound.uppercase(),
-                                style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 2.sp),
+                                style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 2.sp),
                                 color = Ash,
                             )
                             Spacer(Modifier.height(6.dp))
-                            Text(t.nothingFoundSub, style = CVTheme.typography.body.copy(fontSize = 13.sp), color = Fog)
+                            Text(t.nothingFoundSub, style = CVTheme.typography.body.copy(fontSize = 14.sp), color = Fog)
                         }
                     }
                 } else {
@@ -251,7 +254,7 @@ private fun SearchResultRow(
             Spacer(Modifier.height(2.dp))
             Text(
                 text = sub,
-                style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
+                style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
                 color = Fog,
             )
         }

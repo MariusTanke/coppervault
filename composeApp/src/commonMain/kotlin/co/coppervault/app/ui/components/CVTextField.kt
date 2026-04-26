@@ -57,7 +57,7 @@ fun CVTextField(
             Text(
                 text = label.uppercase(),
                 style = CVTheme.typography.monoMeta.copy(
-                    fontSize = 10.sp,
+                    fontSize = 11.sp,
                     letterSpacing = 1.5.sp,
                 ),
                 color = Ash,

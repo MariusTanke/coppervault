@@ -1,6 +1,7 @@
 package co.coppervault.app.ui.screens.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -37,6 +40,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import co.coppervault.app.data.Articles
 import co.coppervault.app.data.Worlds
 import co.coppervault.app.data.worldAccentByName
 import co.coppervault.app.ui.components.CVChip
@@ -47,6 +51,9 @@ import co.coppervault.app.ui.components.CVKicker
 import co.coppervault.app.ui.components.CVPlaceholder
 import co.coppervault.app.ui.components.CVSpoilerStrip
 import co.coppervault.app.ui.components.CVWordmark
+import co.coppervault.app.ui.screens.article.ArticleReaderScreen
+import co.coppervault.app.ui.screens.notifications.NotificationsScreen
+import co.coppervault.app.ui.screens.search.SearchScreen
 import co.coppervault.app.ui.strings.CVStrings
 import co.coppervault.app.ui.theme.Abyss
 import co.coppervault.app.ui.theme.Ash
@@ -88,11 +95,15 @@ class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val t = CVStrings.current
 
         Column(Modifier.fillMaxSize()) {
             // ── Top bar (non-scrolling) ─────────────────────
-            HomeTopBar()
+            HomeTopBar(
+                onSearchClick = { navigator.push(SearchScreen()) },
+                onNotificationsClick = { navigator.push(NotificationsScreen()) },
+            )
 
             // ── Scrollable content ──────────────────────────
             LazyColumn(
@@ -100,7 +111,12 @@ class HomeScreen : Screen {
                 contentPadding = PaddingValues(bottom = 100.dp),
             ) {
                 // 2.1 Today's Page hero
-                item { TodaysPageCard(t) }
+                item {
+                    TodaysPageCard(
+                        t = t,
+                        onArticleClick = { navigator.push(ArticleReaderScreen(Articles.sample)) },
+                    )
+                }
 
                 // 2.2 Continue reading header
                 item {
@@ -111,7 +127,7 @@ class HomeScreen : Screen {
                         verticalAlignment = Alignment.Bottom,
                     ) {
                         CVKicker(t.continueL, color = Linen)
-                        CVKicker(t.seeAll, color = Ash, size = 10)
+                        CVKicker(t.seeAll, color = Ash, size = 11)
                     }
                 }
 
@@ -135,7 +151,10 @@ class HomeScreen : Screen {
 // ── Top bar ─────────────────────────────────────────────
 
 @Composable
-private fun HomeTopBar() {
+private fun HomeTopBar(
+    onSearchClick: () -> Unit,
+    onNotificationsClick: () -> Unit,
+) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -150,17 +169,17 @@ private fun HomeTopBar() {
                         ),
                     )
                 }
-                .padding(top = 54.dp, bottom = 14.dp, start = 20.dp, end = 20.dp),
+                .padding(top = 54.dp, bottom = 16.dp, start = 20.dp, end = 20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
             // Left: CosmereMark + Wordmark
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                CVCosmereMark(size = 22.dp, strokeWidth = 0.6f)
-                CVWordmark(size = 17, tight = true)
+                CVCosmereMark(size = 36.dp, strokeWidth = 0.6f)
+                CVWordmark(size = 26, tight = true)
             }
 
             // Right: search + bell with notification dot
@@ -168,12 +187,17 @@ private fun HomeTopBar() {
                 horizontalArrangement = Arrangement.spacedBy(14.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(CVIcons.Search, contentDescription = "Search", tint = Fog, modifier = Modifier.size(18.dp))
-                Box {
-                    Icon(CVIcons.Bell, contentDescription = "Notifications", tint = Fog, modifier = Modifier.size(18.dp))
+                Icon(
+                    CVIcons.Search,
+                    contentDescription = "Search",
+                    tint = Fog,
+                    modifier = Modifier.size(26.dp).clickable { onSearchClick() },
+                )
+                Box(modifier = Modifier.clickable { onNotificationsClick() }) {
+                    Icon(CVIcons.Bell, contentDescription = "Notifications", tint = Fog, modifier = Modifier.size(26.dp))
                     Box(
                         modifier = Modifier
-                            .size(6.dp)
+                            .size(10.dp)
                             .background(Aurum, CircleShape)
                             .align(Alignment.TopEnd)
                             .offset(x = 1.dp, y = (-1).dp),
@@ -188,13 +212,17 @@ private fun HomeTopBar() {
 // ── Today's Page hero card ──────────────────────────────
 
 @Composable
-private fun TodaysPageCard(t: co.coppervault.app.ui.strings.Strings) {
+private fun TodaysPageCard(
+    t: co.coppervault.app.ui.strings.Strings,
+    onArticleClick: () -> Unit = {},
+) {
     val rosharAccent = Worlds.byKey["roshar"]!!.accent
 
     Box(
         modifier = Modifier
             .padding(start = 20.dp, end = 20.dp, top = 16.dp)
             .fillMaxWidth()
+            .clickable { onArticleClick() }
             .drawBehind {
                 // Background: Ink → Abyss vertical
                 drawRect(
@@ -252,8 +280,8 @@ private fun TodaysPageCard(t: co.coppervault.app.ui.strings.Strings) {
             Text(
                 text = t.rhythmBody,
                 style = CVTheme.typography.uiS.copy(
-                    fontSize = 13.sp,
-                    lineHeight = 19.5.sp,
+                    fontSize = 14.sp,
+                    lineHeight = 21.sp,
                 ),
                 color = Fog,
             )
@@ -268,7 +296,7 @@ private fun TodaysPageCard(t: co.coppervault.app.ui.strings.Strings) {
                 Text(
                     text = "\u00B7 6 ${t.minRead}",
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         letterSpacing = 1.sp,
                     ),
                     color = Ash,
@@ -338,7 +366,7 @@ private fun ContinueReadingRow() {
                 Text(
                     text = "${book.percent}% \u00B7 ${world?.name ?: book.world}",
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         letterSpacing = 0.5.sp,
                     ),
                     color = Ash,
@@ -397,27 +425,27 @@ private fun ForumThreads(t: co.coppervault.app.ui.strings.Strings) {
                         Text(
                             text = thread.world.uppercase(),
                             style = CVTheme.typography.monoMeta.copy(
-                                fontSize = 9.sp,
+                                fontSize = 10.sp,
                                 letterSpacing = 0.5.sp,
                             ),
                             color = accent,
                         )
-                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp), color = Ash)
+                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp), color = Ash)
                         Text(
                             text = thread.author,
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 0.5.sp),
+                            style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 0.5.sp),
                             color = Ash,
                         )
-                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp), color = Ash)
+                        Text("\u00B7", style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp), color = Ash)
                         Text(
                             text = thread.time,
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 0.5.sp),
+                            style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 0.5.sp),
                             color = Ash,
                         )
                         Spacer(Modifier.weight(1f))
                         Text(
                             text = "${thread.replies} ${t.replies}",
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 0.5.sp),
+                            style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 0.5.sp),
                             color = Ash,
                         )
                     }

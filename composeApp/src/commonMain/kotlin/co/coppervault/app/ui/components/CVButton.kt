@@ -43,9 +43,9 @@ import co.coppervault.app.ui.theme.Void
 enum class CVButtonVariant { Primary, Ghost, Outline }
 
 enum class CVButtonSize(val height: Dp, val hPad: Dp, val fontSize: Int) {
-    S(32.dp, 12.dp, 12),
-    M(44.dp, 18.dp, 13),
-    L(52.dp, 22.dp, 14),
+    S(32.dp, 12.dp, 13),
+    M(44.dp, 18.dp, 14),
+    L(52.dp, 22.dp, 15),
 }
 
 @Composable

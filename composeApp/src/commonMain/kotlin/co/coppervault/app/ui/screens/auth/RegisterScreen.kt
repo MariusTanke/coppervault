@@ -107,7 +107,7 @@ class RegisterScreen : Screen {
             ) {
                 Icon(CVIcons.Back, contentDescription = t.back, tint = Ash, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(8.dp))
-                CVKicker(t.back, color = Fog, size = 10)
+                CVKicker(t.back, color = Fog, size = 11)
             }
 
             Spacer(Modifier.height(28.dp))
@@ -138,8 +138,8 @@ class RegisterScreen : Screen {
             Text(
                 text = t.nameEtched,
                 style = CVTheme.typography.uiS.copy(
-                    fontSize = 12.sp,
-                    lineHeight = 18.sp,
+                    fontSize = 13.sp,
+                    lineHeight = 19.5.sp,
                 ),
                 color = Fog,
             )
@@ -199,8 +199,8 @@ class RegisterScreen : Screen {
                     Text(
                         text = t.spoilerWarn,
                         style = CVTheme.typography.uiS.copy(
-                            fontSize = 11.sp,
-                            lineHeight = 16.5.sp,
+                            fontSize = 12.sp,
+                            lineHeight = 18.sp,
                         ),
                         color = Linen,
                     )
@@ -241,7 +241,7 @@ class RegisterScreen : Screen {
                             append(t.compact)
                         }
                     },
-                    style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
+                    style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
                 )
             }
 

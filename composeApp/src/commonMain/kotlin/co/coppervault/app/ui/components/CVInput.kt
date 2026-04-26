@@ -66,7 +66,7 @@ fun CVInput(
             textStyle = TextStyle(
                 color = Parchment,
                 fontFamily = CVTheme.typography.kicker.fontFamily, // JetBrains Mono
-                fontSize = 14.sp,
+                fontSize = 15.sp,
             ),
             cursorBrush = SolidColor(Aurum),
             visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,

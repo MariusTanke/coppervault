@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -138,7 +139,7 @@ class MeScreen : Screen {
                     Text(
                         text = User.handle.uppercase(),
                         style = CVTheme.typography.monoMeta.copy(
-                            fontSize = 10.sp,
+                            fontSize = 11.sp,
                             letterSpacing = 1.5.sp,
                         ),
                         color = Aurum,
@@ -201,7 +202,7 @@ class MeScreen : Screen {
                         ) {
                             Text(
                                 text = world.name,
-                                style = CVTheme.typography.uiS.copy(fontSize = 11.sp),
+                                style = CVTheme.typography.uiS.copy(fontSize = 12.sp),
                                 color = Linen,
                                 modifier = Modifier.width(70.dp),
                             )
@@ -220,7 +221,7 @@ class MeScreen : Screen {
                             }
                             Text(
                                 text = "$progress%",
-                                style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp),
+                                style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp),
                                 color = Ash,
                                 modifier = Modifier.width(30.dp),
                                 textAlign = TextAlign.End,
@@ -238,42 +239,27 @@ class MeScreen : Screen {
             }
 
             item {
-                Row(
+                Column(
                     modifier = Modifier.padding(horizontal = 20.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    t.seals.forEachIndexed { index, seal ->
-                        val active = index < 3
-                        Column(
-                            modifier = Modifier
-                                .width(74.dp)
-                                .border(0.5.dp, Mist)
-                                .then(
-                                    if (active) Modifier.background(Aurum.copy(alpha = 0.06f))
-                                    else Modifier
-                                )
-                                .padding(top = 8.dp, bottom = 10.dp, start = 10.dp, end = 10.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.spacedBy(6.dp),
+                    t.seals.chunked(4).forEach { row ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
                         ) {
-                            CVCosmereMark(
-                                size = 28.dp,
-                                color = if (active) Aurum else Ash,
-                            )
-                            Text(
-                                text = seal.uppercase(),
-                                style = CVTheme.typography.monoMeta.copy(
-                                    fontSize = 8.sp,
-                                    letterSpacing = 0.5.sp,
-                                ),
-                                color = if (active) Aurum else Ash,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.then(
-                                    if (!active) Modifier.drawBehind {
-                                        // opacity simulated via alpha
-                                    } else Modifier
-                                ),
-                            )
+                            row.forEach { seal ->
+                                val index = t.seals.indexOf(seal)
+                                val active = index < 3
+                                SealCard(
+                                    label = seal,
+                                    active = active,
+                                    modifier = Modifier.weight(1f),
+                                )
+                            }
+                            repeat(4 - row.size) {
+                                Spacer(Modifier.weight(1f))
+                            }
                         }
                     }
                 }
@@ -281,6 +267,43 @@ class MeScreen : Screen {
                 Spacer(Modifier.height(16.dp))
             }
         }
+    }
+}
+
+@Composable
+private fun SealCard(
+    label: String,
+    active: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .aspectRatio(1f)
+            .border(0.5.dp, Mist)
+            .then(
+                if (active) Modifier.background(Aurum.copy(alpha = 0.06f))
+                else Modifier
+            )
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        CVCosmereMark(
+            size = 28.dp,
+            color = if (active) Aurum else Ash,
+        )
+        Spacer(Modifier.height(6.dp))
+        Text(
+            text = label.uppercase(),
+            style = CVTheme.typography.monoMeta.copy(
+                fontSize = 9.sp,
+                letterSpacing = 0.5.sp,
+            ),
+            color = if (active) Aurum else Ash,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            softWrap = true,
+        )
     }
 }
 
@@ -299,7 +322,7 @@ private fun StatItem(value: String, label: String) {
         Text(
             text = label.uppercase(),
             style = CVTheme.typography.monoMeta.copy(
-                fontSize = 9.sp,
+                fontSize = 10.sp,
                 letterSpacing = 1.sp,
             ),
             color = Ash,

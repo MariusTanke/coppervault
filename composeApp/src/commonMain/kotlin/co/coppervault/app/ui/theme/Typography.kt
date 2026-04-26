@@ -93,43 +93,43 @@ fun cvTypography(): CVTypography {
             lineHeight = 27.5.sp,
         ),
 
-        // Body: 14 sp / 0 / 1.55  (base 13 × 1.10)
+        // Body: 15.5 sp / 0 / 1.55  (+10 %)
         body = TextStyle(
+            fontFamily = inter,
+            fontWeight = FontWeight.Normal,
+            fontSize = 15.5.sp,
+            letterSpacing = 0.sp,
+            lineHeight = 24.sp,
+        ),
+        // UI L: 14 sp / 0 / 1.4  (+10 %)
+        uiL = TextStyle(
             fontFamily = inter,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
             letterSpacing = 0.sp,
-            lineHeight = 21.7.sp,
+            lineHeight = 20.sp,
         ),
-        // UI L: 13 sp / 0 / 1.4  (base 12 × 1.10)
-        uiL = TextStyle(
-            fontFamily = inter,
-            fontWeight = FontWeight.Normal,
-            fontSize = 13.sp,
-            letterSpacing = 0.sp,
-            lineHeight = 18.2.sp,
-        ),
-        // UI S: 12 sp / 0.2 / 1.4  (base 11 × 1.10)
+        // UI S: 13 sp / 0.2 / 1.4  (+10 %)
         uiS = TextStyle(
             fontFamily = inter,
             fontWeight = FontWeight.Normal,
-            fontSize = 12.sp,
+            fontSize = 13.sp,
             letterSpacing = 0.2.sp,
-            lineHeight = 16.8.sp,
+            lineHeight = 18.5.sp,
         ),
 
-        // Kicker: 11 sp / letter-spacing 2 / uppercase  (base 10 × 1.10)
+        // Kicker: 12 sp / letter-spacing 2 / uppercase  (+10 %)
         kicker = TextStyle(
             fontFamily = mono,
             fontWeight = FontWeight.Normal,
-            fontSize = 11.sp,
+            fontSize = 12.sp,
             letterSpacing = 2.sp,
         ),
-        // Mono meta: 11 sp / 0.5–1 / often uppercase
+        // Mono meta: 12 sp / 0.5–1 / often uppercase  (+10 %)
         monoMeta = TextStyle(
             fontFamily = mono,
             fontWeight = FontWeight.Normal,
-            fontSize = 11.sp,
+            fontSize = 12.sp,
             letterSpacing = 0.5.sp,
         ),
     )

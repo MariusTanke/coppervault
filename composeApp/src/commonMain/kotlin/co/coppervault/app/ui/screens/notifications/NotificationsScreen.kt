@@ -42,6 +42,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import co.coppervault.app.data.AppNotification
 import co.coppervault.app.data.NotifType
 import co.coppervault.app.data.Notifications
@@ -62,6 +64,7 @@ class NotificationsScreen : Screen {
 
     @Composable
     override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
         val t = CVStrings.current
         var selectedTab by remember { mutableStateOf(0) }
 
@@ -87,7 +90,7 @@ class NotificationsScreen : Screen {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Icon(CVIcons.Back, contentDescription = null, tint = Fog, modifier = Modifier.size(18.dp))
+                Icon(CVIcons.Back, contentDescription = null, tint = Fog, modifier = Modifier.size(18.dp).clickable { navigator.pop() })
                 Text(
                     text = t.notifications,
                     style = CVTheme.typography.displayM.copy(fontSize = 22.sp),
@@ -96,7 +99,7 @@ class NotificationsScreen : Screen {
                 Text(
                     text = t.markAllRead.uppercase(),
                     style = CVTheme.typography.monoMeta.copy(
-                        fontSize = 10.sp,
+                        fontSize = 11.sp,
                         letterSpacing = 1.5.sp,
                     ),
                     color = Aurum,
@@ -135,7 +138,7 @@ class NotificationsScreen : Screen {
                             Text(
                                 text = label.uppercase(),
                                 style = CVTheme.typography.monoMeta.copy(
-                                    fontSize = 11.sp,
+                                    fontSize = 12.sp,
                                     letterSpacing = 1.5.sp,
                                     fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                                 ),
@@ -153,7 +156,7 @@ class NotificationsScreen : Screen {
                                 ) {
                                     Text(
                                         text = "$unreadCount",
-                                        style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp),
+                                        style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp),
                                         color = Void,
                                     )
                                 }
@@ -180,11 +183,11 @@ class NotificationsScreen : Screen {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = t.notifEmpty.uppercase(),
-                            style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 2.sp),
+                            style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp, letterSpacing = 2.sp),
                             color = Ash,
                         )
                         Spacer(Modifier.height(6.dp))
-                        Text(t.notifEmptySub, style = CVTheme.typography.body.copy(fontSize = 13.sp), color = Fog)
+                        Text(t.notifEmptySub, style = CVTheme.typography.body.copy(fontSize = 14.sp), color = Fog)
                     }
                 }
             } else {
@@ -236,7 +239,7 @@ private fun NotifRow(notif: AppNotification) {
         ) {
             Text(
                 text = notif.author.first().uppercase(),
-                style = CVTheme.typography.monoMeta.copy(fontSize = 12.sp),
+                style = CVTheme.typography.monoMeta.copy(fontSize = 13.sp),
                 color = Linen,
             )
         }
@@ -255,12 +258,12 @@ private fun NotifRow(notif: AppNotification) {
                         append(notif.target)
                     }
                 },
-                style = CVTheme.typography.body.copy(fontSize = 14.sp, lineHeight = (14 * 1.3).sp),
+                style = CVTheme.typography.body.copy(fontSize = 15.sp, lineHeight = (15 * 1.3).sp),
             )
             Spacer(Modifier.height(3.dp))
             Text(
                 text = "${notif.worldKey.uppercase()} \u00B7 ${notif.timeAgo}",
-                style = CVTheme.typography.monoMeta.copy(fontSize = 9.sp, letterSpacing = 1.sp),
+                style = CVTheme.typography.monoMeta.copy(fontSize = 10.sp, letterSpacing = 1.sp),
                 color = Ash,
             )
         }
@@ -272,7 +275,7 @@ private fun NotifRow(notif: AppNotification) {
                 NotifType.MENTION -> "@"
                 NotifType.ARTICLE -> "\uD83D\uDCD6"
             },
-            style = CVTheme.typography.monoMeta.copy(fontSize = 14.sp),
+            style = CVTheme.typography.monoMeta.copy(fontSize = 15.sp),
             color = Ash,
         )
     }
