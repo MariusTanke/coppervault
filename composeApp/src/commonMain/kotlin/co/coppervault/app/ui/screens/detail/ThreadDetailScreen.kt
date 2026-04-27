@@ -81,47 +81,70 @@ class ThreadDetailScreen(private val threadId: String) : Screen {
                 .fillMaxSize()
                 .background(CVTheme.colors.abyss),
         ) {
+            // ── Header (fixed) ───────────────────────────────
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 14.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Icon(
+                            CVIcons.Back,
+                            contentDescription = null,
+                            tint = Ash,
+                            modifier = Modifier
+                                .size(18.dp)
+                                .clickable { navigator.pop() },
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        CVKicker(
+                            "${thread.worldKey.uppercase()} \u00B7 ${thread.category.uppercase()}",
+                            color = accent,
+                            size = 11,
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = thread.title,
+                            style = CVTheme.typography.displayM.copy(
+                                fontSize = 22.sp,
+                                letterSpacing = (-0.3).sp,
+                                lineHeight = 26.sp,
+                            ),
+                            color = Parchment,
+                            maxLines = 2,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                        )
+                    }
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.padding(start = 12.dp),
+                    ) {
+                        Icon(
+                            CVIcons.Share,
+                            contentDescription = null,
+                            tint = Ash,
+                            modifier = Modifier.size(18.dp),
+                        )
+                        Icon(
+                            CVIcons.Bookmark,
+                            contentDescription = null,
+                            tint = Ash,
+                            modifier = Modifier.size(18.dp),
+                        )
+                    }
+                }
+                CVDivider()
+            }
+
             // ── Scrollable content ───────────────────────────
             Box(modifier = Modifier.weight(1f)) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = 32.dp),
                 ) {
-                    // ── Top app bar ──────────────────────────
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                        ) {
-                            Icon(
-                                CVIcons.Back,
-                                contentDescription = null,
-                                tint = Ash,
-                                modifier = Modifier
-                                    .size(18.dp)
-                                    .clickable { navigator.pop() },
-                            )
-                            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                                Icon(
-                                    CVIcons.Share,
-                                    contentDescription = null,
-                                    tint = Ash,
-                                    modifier = Modifier.size(18.dp),
-                                )
-                                Icon(
-                                    CVIcons.Bookmark,
-                                    contentDescription = null,
-                                    tint = Ash,
-                                    modifier = Modifier.size(18.dp),
-                                )
-                            }
-                        }
-                        CVDivider()
-                    }
-
                     // ── Original post ────────────────────────
                     item {
                         Column(
@@ -231,6 +254,13 @@ class ThreadDetailScreen(private val threadId: String) : Screen {
                                     ),
                                     color = Linen,
                                 )
+                            } else {
+                                Spacer(Modifier.height(14.dp))
+                                Text(
+                                    text = "TODO: thread $threadId missing extras",
+                                    style = CVTheme.typography.monoMeta.copy(fontSize = 11.sp),
+                                    color = Ash,
+                                )
                             }
 
                             // Metrics row
@@ -325,6 +355,7 @@ class ThreadDetailScreen(private val threadId: String) : Screen {
                     .padding(horizontal = 12.dp, vertical = 10.dp),
             ) {
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                 ) {

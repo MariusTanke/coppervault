@@ -68,29 +68,42 @@ class WorldDetailScreen(private val worldKey: String) : Screen {
         val books = Library.books.filter { it.worldKey == worldKey }
         val threads = Forum.threads.filter { it.worldKey == worldKey }.take(3)
 
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(CVTheme.colors.abyss),
-            contentPadding = PaddingValues(bottom = 100.dp),
         ) {
-            // ── Top app bar ──────────────────────────────────
-            item {
+            // ── Header (fixed) ───────────────────────────────
+            Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                        .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 14.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom,
                 ) {
-                    Icon(
-                        CVIcons.Back,
-                        contentDescription = null,
-                        tint = Ash,
-                        modifier = Modifier
-                            .size(18.dp)
-                            .clickable { navigator.pop() },
-                    )
+                    Column(modifier = Modifier.weight(1f)) {
+                        Icon(
+                            CVIcons.Back,
+                            contentDescription = null,
+                            tint = Ash,
+                            modifier = Modifier
+                                .size(18.dp)
+                                .clickable { navigator.pop() },
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        CVKicker(saga, color = accent, size = 11)
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = world.name,
+                            style = CVTheme.typography.displayM.copy(
+                                fontSize = 28.sp,
+                                fontWeight = FontWeight.Normal,
+                                letterSpacing = (-0.4).sp,
+                            ),
+                            color = Parchment,
+                        )
+                    }
                     Icon(
                         CVIcons.More,
                         contentDescription = null,
@@ -101,6 +114,11 @@ class WorldDetailScreen(private val worldKey: String) : Screen {
                 CVDivider()
             }
 
+            // ── Scrollable content ───────────────────────────
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 100.dp),
+            ) {
             // ── Hero ─────────────────────────────────────────
             item {
                 Box(
@@ -299,6 +317,7 @@ class WorldDetailScreen(private val worldKey: String) : Screen {
             }
 
             item { Spacer(Modifier.height(32.dp)) }
+            }
         }
     }
 }

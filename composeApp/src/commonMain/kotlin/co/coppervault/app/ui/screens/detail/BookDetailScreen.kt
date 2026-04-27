@@ -73,30 +73,48 @@ class BookDetailScreen(private val bookId: String) : Screen {
         var bookmarked by remember { mutableStateOf(false) }
         val isEs = LocaleController.language.value == Language.Es
 
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(CVTheme.colors.abyss),
-            contentPadding = PaddingValues(bottom = 100.dp),
         ) {
-            // ── Top app bar ──────────────────────────────────
-            item {
+            // ── Header (fixed) ───────────────────────────────
+            Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
+                        .padding(top = 54.dp, start = 20.dp, end = 20.dp, bottom = 14.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom,
                 ) {
-                    Icon(
-                        CVIcons.Back,
-                        contentDescription = null,
-                        tint = Ash,
-                        modifier = Modifier
-                            .size(18.dp)
-                            .clickable { navigator.pop() },
-                    )
-                    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Icon(
+                            CVIcons.Back,
+                            contentDescription = null,
+                            tint = Ash,
+                            modifier = Modifier
+                                .size(18.dp)
+                                .clickable { navigator.pop() },
+                        )
+                        Spacer(Modifier.height(10.dp))
+                        CVKicker(world?.name ?: book.worldKey, color = accent, size = 11)
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            text = book.title,
+                            style = CVTheme.typography.displayM.copy(
+                                fontSize = 22.sp,
+                                letterSpacing = (-0.3).sp,
+                                lineHeight = 26.sp,
+                            ),
+                            color = Parchment,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                        )
+                    }
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.padding(start = 12.dp),
+                    ) {
                         Icon(
                             if (bookmarked) CVIcons.BookmarkFilled else CVIcons.Bookmark,
                             contentDescription = null,
@@ -116,6 +134,11 @@ class BookDetailScreen(private val bookId: String) : Screen {
                 CVDivider()
             }
 
+            // ── Scrollable content ───────────────────────────
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 100.dp),
+            ) {
             // ── Hero ─────────────────────────────────────────
             item {
                 Box(
@@ -324,6 +347,7 @@ class BookDetailScreen(private val bookId: String) : Screen {
             }
 
             item { Spacer(Modifier.height(32.dp)) }
+            }
         }
     }
 }
